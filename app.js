@@ -5,7 +5,7 @@
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const MAX_QTY = 30;
+  const MAX_QTY = 100;
   // Temas de temporada: el servidor dice cuál está activo (fijo o programado por fechas).
   const TEMAS = {
     halloween: {
@@ -19,7 +19,7 @@
   };
   const OTRA = '__otra'; // valor de "Mi colonia no está en la lista"
   // Modo estático (GitHub Pages): sin servidor. El menú sale de catalogo.json, las fechas
-  // se calculan aquí y el pedido se manda armado por WhatsApp.
+  // se calculan aquí y el pedido llega por correo (settings.correoPedidos, vía FormSubmit).
   const ESTATICO = document.documentElement.dataset.modo === 'estatico';
   const TZ = 'America/Mexico_City';
   const DAYS =['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
@@ -125,7 +125,8 @@
     s.fechasAnticipada = s.entregaAnticipada ? todas : [];
     const p = s.temporadaProgramada;
     if (p && p.tema && p.desde <= hoy && (!p.hasta || hoy <= p.hasta)) s.temporada = p.tema;
-    s.transferencia = Boolean(s.clabe);
+    // Transferencia puede ofrecerse sin CLABE publicada: los datos se mandan al confirmar.
+    s.transferencia = s.transferencia ?? Boolean(s.clabe);
     return s;
   }
 
@@ -138,7 +139,11 @@
     state.items = data.items;
     state.byId = new Map(data.items.map((it) => [it.id, it]));
     // Lo que ya no está en el menú sale del pedido guardado.
-    for (const id of Object.keys(state.cart)) if (!state.byId.has(id)) delete state.cart[id];
+    for (const id of Object.keys(state.cart)) {
+      const it = state.byId.get(id);
+      if (!it || it.status !== 'disponible') delete state.cart[id];
+      else if (state.cart[id] > maxFor(it)) state.cart[id] = maxFor(it); // el stock bajó desde la última visita
+    }
     store('postres-pedido', state.cart);
     try {
       money = new Intl.NumberFormat('es-MX', { style: 'currency', currency: data.settings.currency, maximumFractionDigits: 0 });
@@ -367,6 +372,14 @@
     renderGrid();
   });
 
+  // Promoción "N por $X": cada grupo completo cuesta el precio de promoción; el resto, a precio normal.
+  const hasPromo = (it) => it.promo && it.promo.cantidad > 1 && it.promo.precio > 0;
+  const lineTotal = (it, qty) => (hasPromo(it)
+    ? Math.floor(qty / it.promo.cantidad) * it.promo.precio + (qty % it.promo.cantidad) * it.price
+    : it.price * qty);
+  const promoText = (it) => (hasPromo(it) ? `${it.promo.cantidad} por ${fmt(it.promo.precio)}` : '');
+  const promoTag = (it) => (hasPromo(it) ? `<small class="off">${it.promo.cantidad}×${fmt(it.promo.precio)}</small>` : '');
+
   // Stock: null = sin contar (solo aplica el máximo por pedido).
   const maxFor = (it) => (Number.isInteger(it.stock) ? Math.min(MAX_QTY, it.stock) : MAX_QTY);
   const stockTag = (it) => (Number.isInteger(it.stock) && it.status === 'disponible' && it.stock <= 10
@@ -403,7 +416,7 @@
       <article class="card ${shapeFor(it, i)}${sold ? ' is-sold' : ''}${entering ? '' : ' in'}" data-id="${it.id}" style="--d:${(i % 6) * 70}">
         <div class="card-tilt">
           ${pic(it)}
-          ${sold ? '<span class="sold-stamp">Agotado</span>' : `<span class="price-tag${it.price ? '' : ' tbd'}">${it.price ? fmt(it.price) : 'Por confirmar'}</span>`}
+          ${sold ? '<span class="sold-stamp">Agotado</span>' : `<span class="price-tag${it.price ? '' : ' tbd'}">${it.price ? fmt(it.price) : 'Por confirmar'}${promoTag(it)}</span>`}
           ${it.featured && !sold ? '<span class="sticker s-nuevo">Favorito</span>' : ''}
           <button class="card-open" data-open="${it.id}" aria-label="Ver ${esc(it.title)}"></button>
           <div class="card-info">
@@ -500,7 +513,7 @@
   function totals(tipo = 'domicilio', anticipada = false, fuera = false) {
     const s = state.settings;
     const lines = cartLines().filter((l) => l.it.status === 'disponible');
-    const subtotal = lines.reduce((sum, l) => sum + l.it.price * l.qty, 0);
+    const subtotal = lines.reduce((sum, l) => sum + lineTotal(l.it, l.qty), 0);
     const pending = lines.some((l) => !l.it.price);
     const envio = tipo === 'domicilio' && s.costoEnvio && !(s.envioGratisDesde && subtotal >= s.envioGratisDesde) ? s.costoEnvio : 0;
     const extra = anticipada ? s.extraAnticipada || 0 : 0;
@@ -512,7 +525,7 @@
     const s = state.settings;
     return `Cláusula de entrega anticipada: nuestro horario de entrega es ${diasText()} de ${(s.horarios || []).join(' o ')}. `
       + `Si quieres tu pedido otro día o antes de las 8:00 pm, se cobra un cargo extra de ${fmt(s.extraAnticipada || 0)} por pedido, `
-      + 'sujeto a disponibilidad. Te confirmamos por WhatsApp antes de aceptarlo.';
+      + 'sujeto a disponibilidad. Te contactamos para confirmarlo antes de aceptarlo.';
   }
 
   function renderCartUI(bump = false) {
@@ -547,7 +560,7 @@
         <div class="li-main">
           <b>${esc(it.title)}</b>
           ${it.status === 'disponible'
-            ? `<span>${it.price ? `${fmt(it.price)} c/u` : 'Precio por confirmar'}${it.unit ? ` · ${esc(it.unit)}` : ''}</span>`
+            ? `<span>${it.price ? `${fmt(it.price)} c/u` : 'Precio por confirmar'}${promoText(it) ? ` · ${promoText(it)}` : ''}${it.price && lineTotal(it, qty) !== it.price * qty ? ` · <b>${fmt(lineTotal(it, qty))}</b>` : ''}</span>`
             : '<span class="warn">Se agotó · quítalo para continuar</span>'}
         </div>
         <div class="stepper sm">
@@ -564,7 +577,7 @@
     rows.push(`<div class="total"><span>Total</span><strong>${fmt(t.total)}</strong></div>`);
     $('#list-totals').innerHTML = rows.join('');
     const hints = [];
-    if (t.pending) hints.push('Algunos precios están por confirmar: te decimos el total por WhatsApp.');
+    if (t.pending) hints.push('Algunos precios están por confirmar: te decimos el total al confirmar tu pedido.');
     if (s.envioGratisDesde && t.subtotal < s.envioGratisDesde && s.costoEnvio) hints.push(`Te faltan ${fmt(s.envioGratisDesde - t.subtotal)} para el envío gratis.`);
     if (s.pedidoMinimo && !t.pending && t.subtotal < s.pedidoMinimo) hints.push(`El pedido mínimo es de ${fmt(s.pedidoMinimo)}.`);
     if (!s.abierto) hints.push('Por ahora no estamos tomando pedidos en línea.');
@@ -638,7 +651,7 @@
     $('#d-title').textContent = it.title;
     $('#d-price').textContent = priceLabel(it);
     $('#d-price').classList.toggle('tbd', !it.price);
-    $('#d-unit').textContent = [it.unit ? `por ${it.unit}` : '',
+    $('#d-unit').textContent = [it.unit ? `por ${it.unit}` : '', promoText(it),
       Number.isInteger(it.stock) && it.status === 'disponible' ? `${it.stock} disponibles` : ''].filter(Boolean).join(' · ');
     const st = $('#d-status');
     st.className = `status-pill st-${it.status === 'disponible' ? 'disponible' : 'vendido'}`;
@@ -803,6 +816,7 @@
     $('#tipo-seg').hidden = !s.puntoEntrega;
     $('#pickup-info').textContent = s.puntoEntrega ? `Recoges en: ${s.puntoEntrega}` : '';
     $('[data-pay="transferencia"]').hidden = !s.transferencia;
+    $('#transf-hint').textContent = s.clabe ? 'Te damos la CLABE al terminar' : 'Te mandamos los datos al confirmar';
     if (!s.transferencia) F.pago.value = 'efectivo';
     setTipo(state.tipo === 'recoger' && s.puntoEntrega ? 'recoger' : 'domicilio');
 
@@ -851,7 +865,7 @@
   function zonaClause() {
     const s = state.settings;
     return `Entrega fuera de zona: si tu colonia no está en la lista, podemos llevar tu pedido con un cargo extra de ${fmt(s.extraFueraZona || 0)}, `
-      + 'sujeto a la distancia y a que te confirmemos por WhatsApp. Si no llegamos a tu colonia, te avisamos y no se cobra nada.';
+      + 'sujeto a la distancia y a que te lo confirmemos. Si no llegamos a tu colonia, te avisamos y no se cobra nada.';
   }
 
   function paintZona() {
@@ -859,6 +873,12 @@
     $('#otra-zona').hidden = !otra;
     paintSummary();
   }
+
+  apForm.addEventListener('change', (e) => {
+    if (e.target.name !== 'pagoExacto') return;
+    F.pagaCon.disabled = e.target.checked;
+    if (e.target.checked) F.pagaCon.value = '';
+  });
 
   function paintPay() {
     $('#cambio-field').hidden = F.pago.value !== 'efectivo';
@@ -894,6 +914,12 @@
     if (!F.fecha.value) return fail('No hay días de entrega disponibles. Escríbenos por Instagram.');
     if (F.anticipada.checked && !F.horaAnticipada.value.trim()) return fail('Escribe a qué hora quieres la entrega anticipada.', F.horaAnticipada);
     if (!F.pago.value) return fail('Elige cómo vas a pagar.');
+    if (F.pago.value === 'efectivo' && !F.pagoExacto.checked) {
+      const con = Number(F.pagaCon.value) || 0;
+      const total = totals(state.tipo, F.anticipada.checked, F.colonia.value === OTRA).total;
+      if (!con) return fail('Dinos con cuánto vas a pagar para llevarte cambio, o marca "Pago exacto".', F.pagaCon);
+      if (total && con < total) return fail(`Tu pedido es de ${fmt(total)}: el monto con el que pagas no alcanza.`, F.pagaCon);
+    }
 
     const btn = $('#ap-send');
     btn.disabled = true;
@@ -906,11 +932,24 @@
         fueraZona: F.colonia.value === OTRA, coloniaOtra: F.coloniaOtra.value,
         fecha: F.fecha.value, horario: F.horario.value,
         anticipada: F.anticipada.checked, horaAnticipada: F.horaAnticipada.value,
-        pago: F.pago.value, pagaCon: F.pagaCon.value, notas: F.notas.value, website: F.website.value,
+        pago: F.pago.value, pagaCon: F.pagaCon.value, pagoExacto: F.pagoExacto.checked,
+        notas: F.notas.value, website: F.website.value,
       };
-      const res = ESTATICO
-        ? { ok: true, status: 200, json: async () => pedidoLocal(pedido) }
-        : await fetch('/api/pedido', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(pedido) });
+      let res;
+      if (ESTATICO) {
+        const local = pedidoLocal(pedido);
+        if (state.settings.correoPedidos) {
+          try {
+            await enviarCorreo(local, pedido);
+            local.enviado = true;
+          } catch (ex) {
+            return fail(`No pudimos enviar tu pedido (${ex.message}). Inténtalo de nuevo en un momento.`);
+          }
+        }
+        res = { ok: true, status: 200, json: async () => local };
+      } else {
+        res = await fetch('/api/pedido', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(pedido) });
+      }
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         fail(data.error || 'No se pudo enviar. Inténtalo otra vez.');
@@ -935,6 +974,32 @@
     }
   });
 
+  // Manda el pedido al correo del negocio con FormSubmit (formsubmit.co): sin servidor propio.
+  // La primera vez FormSubmit pide activar el correo con un enlace que llega a esa bandeja.
+  async function enviarCorreo(data, p) {
+    const s = state.settings;
+    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(s.correoPedidos)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: `Pedido ${data.folio} · ${p.nombre.trim()} · ${fmt(data.total)}`,
+        _template: 'box',
+        _captcha: 'false',
+        _honey: p.website,
+        Folio: data.folio,
+        Cliente: p.nombre.trim(),
+        Teléfono: p.telefono,
+        Instagram: p.instagram.trim(),
+        Entrega: `${data.fecha} · ${data.horario}`,
+        Pago: p.pago,
+        Total: fmt(data.total),
+        Pedido: data.resumen,
+      }),
+    });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok || String(out.success) !== 'true') throw new Error(out.message || `Error ${res.status}`);
+  }
+
   // Arma el pedido en el navegador con las mismas reglas que server.js (modo estático).
   function pedidoLocal(p) {
     const s = state.settings;
@@ -949,7 +1014,7 @@
     const resumen = [
       `Pedido ${folio}`,
       '',
-      ...t.lines.map((l) => `  ${l.qty} × ${l.it.title}${l.it.price ? ` — ${fmt(l.it.price * l.qty)}` : ' — precio por confirmar'}`),
+      ...t.lines.map((l) => `  ${l.qty} × ${l.it.title}${l.it.price ? ` — ${fmt(lineTotal(l.it, l.qty))}` : ' — precio por confirmar'}`),
       '',
       `Subtotal: ${fmt(t.subtotal)}`,
       t.envio ? `Envío: ${fmt(t.envio)}` : null,
@@ -960,12 +1025,13 @@
       `Cliente: ${p.nombre.trim()} · ${p.telefono}${p.instagram.trim() ? ` · IG @${p.instagram.trim().replace(/^@/, '')}` : ''}`,
       p.tipo === 'recoger' ? `Recoge en: ${s.puntoEntrega}` : `Entrega: ${p.direccion.trim()}, ${colonia}${p.referencias.trim() ? ` (${p.referencias.trim()})` : ''}`,
       `Día: ${dayLabel(p.fecha)} · ${horario}${p.anticipada ? ' (entrega anticipada)' : ''}`,
-      `Pago: ${p.pago}${pagaCon ? ` (paga con ${fmt(pagaCon)})` : ''}`,
+      `Pago: ${p.pago}${p.pago === 'efectivo' ? (p.pagoExacto ? ' (pago exacto)' : pagaCon ? ` (paga con ${fmt(pagaCon)} · llevar cambio de ${fmt(Math.max(0, pagaCon - t.total))})` : '') : ''}`,
       p.notas.trim() ? `Notas: ${p.notas.trim()}` : null,
     ].filter((l) => l !== null).join('\n');
     const out = {
       ok: true, folio, total: t.total, envio: t.envio, extra: t.extra, extraZona: t.extraZona, fueraZona: fuera,
       anticipada: p.anticipada, precioPendiente: t.pending, resumen, fecha: dayLabel(p.fecha), horario, local: true,
+      pago: p.pago, telefono: p.telefono,
     };
     if (p.pago === 'transferencia' && s.clabe) out.banco = { beneficiario: s.beneficiario, clabe: s.clabe, banco: s.banco };
     return out;
@@ -973,12 +1039,20 @@
 
   function showDone(data) {
     const s = state.settings;
-    if (data.local) {
-      // Sin servidor el pedido solo existe cuando el cliente lo envía.
+    if (data.local && data.enviado) {
+      // El pedido ya llegó por correo: se le avisa al cliente que lo contactaremos.
+      const tel = data.telefono.replace(/(\d{2})(\d{4})(\d{4})/, '$1 $2 $3');
+      $('#ap-done h2').textContent = '¡Pedido recibido!';
+      $('#ap-done-text').innerHTML = `Tu folio es <b>${esc(data.folio)}</b>. Entrega el <b>${esc(data.fecha)}</b>, <b>${esc(data.horario)}</b>. `
+        + `Total: <b>${fmt(data.total)}</b>${data.precioPendiente ? ' más los precios por confirmar' : ''}. `
+        + `Te contactamos al <b>${esc(tel)}</b> para confirmar.`
+        + (data.pago === 'transferencia' && !data.banco ? ' Al confirmar te enviamos los datos para la transferencia.' : '');
+    } else if (data.local) {
+      // Sin correo configurado: el cliente copia su pedido y nos lo manda.
       $('#ap-done h2').textContent = s.whatsapp ? '¡Ya casi! Envíanos tu pedido' : 'Tu pedido está listo';
       $('#ap-done-text').innerHTML = s.whatsapp
         ? `Toca <b>Enviar por WhatsApp</b> para que nos llegue tu pedido <b>${esc(data.folio)}</b> (${esc(data.fecha)}, ${esc(data.horario)}). Total: <b>${fmt(data.total)}</b>${data.precioPendiente ? ' más los precios por confirmar' : ''}.`
-        : `Copia este resumen y mándanoslo por Instagram:<textarea class="resumen" readonly rows="10">${esc(data.resumen)}</textarea>`;
+        : `Copia este resumen y mándanoslo por mensaje:<textarea class="resumen" readonly rows="10">${esc(data.resumen)}</textarea>`;
     } else {
       $('#ap-done h2').textContent = '¡Pedido recibido!';
     $('#ap-done-text').innerHTML = `Tu folio es <b>${esc(data.folio)}</b>. Entrega el <b>${esc(data.fecha)}</b>, <b>${esc(data.horario)}</b>`
@@ -997,10 +1071,10 @@
           ${data.banco.banco ? `<dt>Banco</dt><dd>${esc(data.banco.banco)}</dd>` : ''}
           <dt>Concepto</dt><dd>${esc(data.folio)}</dd>
         </dl>
-        <p class="hint">Mándanos tu comprobante por WhatsApp o Instagram.</p>`;
+        <p class="hint">Mándanos tu comprobante cuando te contactemos.</p>`;
     }
     const wa = $('#done-wa');
-    wa.hidden = !s.whatsapp;
+    wa.hidden = !s.whatsapp || Boolean(data.enviado);
     if (s.whatsapp) wa.href = waUrl(`¡Hola! ${data.local ? 'Quiero hacer este pedido' : 'Acabo de hacer mi pedido en la página'}.\n\n${data.resumen}`);
     const ig = $('#done-ig');
     ig.hidden = !s.instagram;
@@ -1033,12 +1107,13 @@
     const dias = diasText();
     $('#how-dias').textContent = `${dias ? `Entregamos ${dias}` : 'Elige el día que te acomode'}${s.horarios?.length ? `, en horario de ${s.horarios.join(' o ')}` : ''}.`;
     $('#how-pago').textContent = s.transferencia
-      ? 'Transferencia (te damos la CLABE al terminar tu pedido) o efectivo al recibir.'
-      : 'Efectivo al recibir. Si necesitas cambio, avísanos con cuánto pagas.';
+      ? `Transferencia (${s.clabe ? 'te damos la CLABE al terminar tu pedido' : 'te mandamos los datos al confirmar'}) o efectivo al recibir. Si pagas en efectivo, dinos con cuánto pagas para llevarte cambio.`
+      : 'Efectivo al recibir. Dinos con cuánto pagas para llevarte cambio.';
     $('#how-early').hidden = !s.entregaAnticipada;
     $('#how-clause').textContent = clauseText();
     $('#how-zona').textContent = s.zona || '';
     $('#how-colonias').innerHTML = (s.colonias || []).map((c) => `<li>${esc(c)}</li>`).join('');
+    $('#how-zona-card').hidden = !s.fueraZona;
     $('#how-zona-clause').hidden = !s.fueraZona;
     $('#how-zona-clause').textContent = zonaClause();
     const btns = [];

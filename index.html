@@ -138,7 +138,7 @@
           <li style="--i:0"><b>1</b><div><h3>Arma tu pedido</h3><p>Elige postres, artículos y cuántos quieres. Puedes mezclar las dos secciones en un mismo pedido.</p></div></li>
           <li style="--i:1"><b>2</b><div><h3>Elige día y horario</h3><p id="how-dias">Entregamos viernes, sábado y domingo.</p></div></li>
           <li style="--i:2"><b>3</b><div><h3>Paga como prefieras</h3><p id="how-pago">Transferencia o efectivo al recibir.</p></div></li>
-          <li style="--i:3"><b>4</b><div><h3>Te confirmamos</h3><p>Te escribimos por WhatsApp para confirmar la hora exacta de entrega.</p></div></li>
+          <li style="--i:3"><b>4</b><div><h3>Te confirmamos</h3><p>Te contactamos al número que nos dejes para confirmar tu pedido y la hora de entrega.</p></div></li>
         </ol>
         <section class="how-card" id="how-early" hidden>
           <h3><svg><use href="#i-clock"/></svg>¿Lo necesitas antes?</h3>
@@ -254,7 +254,7 @@
           <fieldset class="ap-group">
             <legend>Tus datos</legend>
             <label class="ap-field"><span>Nombre</span><input name="nombre" autocomplete="name" maxlength="80" required></label>
-            <label class="ap-field"><span>WhatsApp <small>(10 dígitos)</small></span><input name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" required placeholder="55 1234 5678"></label>
+            <label class="ap-field"><span>Teléfono o WhatsApp <small>(10 dígitos, para contactarte)</small></span><input name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" required placeholder="55 1234 5678"></label>
             <label class="ap-field"><span>Instagram <small>(opcional)</small></span><input name="instagram" autocomplete="off" maxlength="40" placeholder="@usuario"></label>
           </fieldset>
 
@@ -289,10 +289,13 @@
           <fieldset class="ap-group">
             <legend>Pago</legend>
             <div class="pay-opts" id="pay-opts">
-              <label class="pay-opt" data-pay="transferencia"><input type="radio" name="pago" value="transferencia"><span><svg><use href="#i-share"/></svg><b>Transferencia</b><small>Te damos la CLABE al terminar</small></span></label>
+              <label class="pay-opt" data-pay="transferencia"><input type="radio" name="pago" value="transferencia"><span><svg><use href="#i-share"/></svg><b>Transferencia</b><small id="transf-hint">Te damos la CLABE al terminar</small></span></label>
               <label class="pay-opt"><input type="radio" name="pago" value="efectivo"><span><svg><use href="#i-cash"/></svg><b>Efectivo</b><small>Pagas al recibir</small></span></label>
             </div>
-            <label class="ap-field" id="cambio-field" hidden><span>¿Con cuánto pagas? <small>(para llevarte cambio)</small></span><input name="pagaCon" type="number" inputmode="numeric" min="0" step="1" placeholder="Ej. 500"></label>
+            <div class="cambio" id="cambio-field" hidden>
+              <label class="ap-field"><span>¿Con cuánto pagas? <small>(para llevarte cambio)</small></span><input name="pagaCon" type="number" inputmode="numeric" min="0" step="1" placeholder="Ej. 200"></label>
+              <label class="ap-check exacto"><input type="checkbox" name="pagoExacto"><span><b>Pago exacto</b>, no necesito cambio</span></label>
+            </div>
           </fieldset>
 
           <label class="ap-field"><span>Notas <small>(opcional)</small></span><input name="notas" maxlength="400" placeholder="Es para regalo, sin…"></label>
