@@ -139,10 +139,12 @@
     state.items = data.items;
     state.byId = new Map(data.items.map((it) => [it.id, it]));
     // Lo que ya no está en el menú sale del pedido guardado.
-    for (const id of Object.keys(state.cart)) {
+    for (const key of Object.keys(state.cart)) {
+      const { id, pack } = parseKey(key);
       const it = state.byId.get(id);
-      if (!it || it.status !== 'disponible') delete state.cart[id];
-      else if (state.cart[id] > maxFor(it)) state.cart[id] = maxFor(it); // el stock bajó desde la última visita
+      if (!it || it.status !== 'disponible' || (pack && !hasPromo(it))) delete state.cart[key];
+      else if (state.cart[key] > maxForKey(it, pack)) state.cart[key] = maxForKey(it, pack); // el stock bajó
+      if (state.cart[key] === 0) delete state.cart[key];
     }
     store('postres-pedido', state.cart);
     try {
@@ -372,16 +374,35 @@
     renderGrid();
   });
 
-  // Promoción "N por $X": cada grupo completo cuesta el precio de promoción; el resto, a precio normal.
-  const hasPromo = (it) => it.promo && it.promo.cantidad > 1 && it.promo.precio > 0;
-  const lineTotal = (it, qty) => (hasPromo(it)
-    ? Math.floor(qty / it.promo.cantidad) * it.promo.precio + (qty % it.promo.cantidad) * it.price
-    : it.price * qty);
+  // Promoción "N por $X" (it.promo): el cliente elige entre pieza suelta o paquete. En el carrito
+  // cada opción es un renglón: la clave es el id (suelto) o id + PACK (paquetes; qty = paquetes).
+  const PACK = '~p';
+  const hasPromo = (it) => Boolean(it && it.promo && it.promo.cantidad > 1 && it.promo.precio > 0);
+  const keyOf = (id, pack) => (pack ? id + PACK : id);
+  const parseKey = (k) => ({ id: k.endsWith(PACK) ? k.slice(0, -PACK.length) : k, pack: k.endsWith(PACK) });
+  const piecesOf = (it, pack) => (pack && hasPromo(it) ? it.promo.cantidad : 1);
+  const unitPrice = (it, pack) => (pack && hasPromo(it) ? it.promo.precio : it.price);
+  const lineTotal = (it, qty, pack = false) => unitPrice(it, pack) * qty;
+  const optLabel = (it, pack) => (pack ? `Paquete de ${it.promo.cantidad}` : `1 ${it.unit || 'pieza'}`);
   const promoText = (it) => (hasPromo(it) ? `${it.promo.cantidad} por ${fmt(it.promo.precio)}` : '');
   const promoTag = (it) => (hasPromo(it) ? `<small class="off">${it.promo.cantidad}×${fmt(it.promo.precio)}</small>` : '');
 
-  // Stock: null = sin contar (solo aplica el máximo por pedido).
-  const maxFor = (it) => (Number.isInteger(it.stock) ? Math.min(MAX_QTY, it.stock) : MAX_QTY);
+  // Stock: null = sin contar (solo aplica el máximo por pedido). Con promoción, suelto y paquete
+  // comparten el mismo stock en piezas.
+  function piecesInCart(id, exceptKey) {
+    const it = state.byId.get(id);
+    return Object.entries(state.cart).reduce((sum, [k, q]) => {
+      const p = parseKey(k);
+      return p.id === id && k !== exceptKey ? sum + q * piecesOf(it, p.pack) : sum;
+    }, 0);
+  }
+  function maxForKey(it, pack = false) {
+    const n = piecesOf(it, pack);
+    if (!Number.isInteger(it.stock)) return MAX_QTY;
+    const libres = it.stock - piecesInCart(it.id, keyOf(it.id, pack));
+    return Math.max(0, Math.min(MAX_QTY, Math.floor(libres / n)));
+  }
+  const maxFor = (it) => maxForKey(it, false);
   const stockTag = (it) => (Number.isInteger(it.stock) && it.status === 'disponible' && it.stock <= 10
     ? `<span class="stock-tag">${it.stock === 1 ? '¡Queda 1!' : `Quedan ${it.stock}`}</span>` : '');
 
@@ -401,6 +422,11 @@
 
   function addControl(it) {
     if (it.status !== 'disponible' || !state.settings.abierto) return '';
+    if (hasPromo(it)) {
+      // Con promoción el + abre la ficha para elegir entre suelto o paquete.
+      const n = (state.cart[it.id] || 0) + (state.cart[keyOf(it.id, true)] || 0);
+      return `<button class="card-add" data-open="${it.id}" aria-label="Elegir ${esc(it.title)}"><svg><use href="#i-plus"/></svg>${n ? `<span class="count">${n}</span>` : ''}</button>`;
+    }
     const q = state.cart[it.id] || 0;
     if (!q) return `<button class="card-add" data-add="${it.id}" aria-label="Agregar ${esc(it.title)}"><svg><use href="#i-plus"/></svg></button>`;
     return `<div class="stepper card-step" data-stepper="${it.id}">
@@ -492,28 +518,34 @@
 
   // ------------------------------------------------------------ pedido (carrito)
 
-  function setQty(id, qty, announce = false) {
+  // key = id del producto (suelto) o id + PACK (paquete de promoción).
+  function setQty(key, qty, announce = false) {
+    const { id, pack } = parseKey(key);
     const it = state.byId.get(id);
     if (!it) return;
-    const q = clamp(Math.round(qty), 0, maxFor(it));
-    const before = state.cart[id] || 0;
-    if (qty > q && q === before) toast(it.stock ? `Solo quedan ${it.stock}` : 'Se agotó', 'i-info');
-    if (q) state.cart[id] = q; else delete state.cart[id];
+    const q = clamp(Math.round(qty), 0, maxForKey(it, pack));
+    const before = state.cart[key] || 0;
+    if (qty > q && q === before) toast(it.stock ? `Solo quedan ${it.stock} piezas` : 'Se agotó', 'i-info');
+    if (q) state.cart[key] = q; else delete state.cart[key];
     store('postres-pedido', state.cart);
-    if (announce && q > before) toast(`${it.title} en tu pedido`, 'i-bag');
+    if (announce && q > before) toast(`${it.title}${hasPromo(it) ? ` · ${optLabel(it, pack)}` : ''} en tu pedido`, 'i-bag');
     repaintCard(id);
     renderCartUI(q > before);
   }
 
   const cartLines = () => Object.entries(state.cart)
-    .map(([id, qty]) => ({ it: state.byId.get(id), qty }))
+    .map(([key, qty]) => {
+      const { id, pack } = parseKey(key);
+      const it = state.byId.get(id);
+      return { key, it, qty, pack: pack && hasPromo(it) };
+    })
     .filter((l) => l.it);
   const cartCount = () => cartLines().reduce((s, l) => s + l.qty, 0);
 
   function totals(tipo = 'domicilio', anticipada = false, fuera = false) {
     const s = state.settings;
     const lines = cartLines().filter((l) => l.it.status === 'disponible');
-    const subtotal = lines.reduce((sum, l) => sum + lineTotal(l.it, l.qty), 0);
+    const subtotal = lines.reduce((sum, l) => sum + lineTotal(l.it, l.qty, l.pack), 0);
     const pending = lines.some((l) => !l.it.price);
     const envio = tipo === 'domicilio' && s.costoEnvio && !(s.envioGratisDesde && subtotal >= s.envioGratisDesde) ? s.costoEnvio : 0;
     const extra = anticipada ? s.extraAnticipada || 0 : 0;
@@ -554,19 +586,19 @@
         </div>`;
       return;
     }
-    body.innerHTML = lines.map(({ it, qty }, i) => `
-      <div class="li" style="--i:${i}" data-li="${it.id}">
+    body.innerHTML = lines.map(({ key, it, qty, pack }, i) => `
+      <div class="li" style="--i:${i}" data-li="${esc(key)}">
         <button class="li-img" data-open="${it.id}" aria-label="Ver ${esc(it.title)}">${pic(it)}</button>
         <div class="li-main">
           <b>${esc(it.title)}</b>
           ${it.status === 'disponible'
-            ? `<span>${it.price ? `${fmt(it.price)} c/u` : 'Precio por confirmar'}${promoText(it) ? ` · ${promoText(it)}` : ''}${it.price && lineTotal(it, qty) !== it.price * qty ? ` · <b>${fmt(lineTotal(it, qty))}</b>` : ''}</span>`
+            ? `<span>${hasPromo(it) ? `<em class="li-opt">${esc(optLabel(it, pack))}</em> · ` : ''}${it.price ? `${fmt(unitPrice(it, pack))} ${pack ? 'c/paquete' : 'c/u'}` : 'Precio por confirmar'}${qty > 1 && it.price ? ` · <b>${fmt(lineTotal(it, qty, pack))}</b>` : ''}</span>`
             : '<span class="warn">Se agotó · quítalo para continuar</span>'}
         </div>
         <div class="stepper sm">
-          <button type="button" data-dec="${it.id}" aria-label="Menos"><svg><use href="#i-${qty === 1 ? 'trash' : 'minus'}"/></svg></button>
+          <button type="button" data-dec="${esc(key)}" aria-label="Menos"><svg><use href="#i-${qty === 1 ? 'trash' : 'minus'}"/></svg></button>
           <output>${qty}</output>
-          <button type="button" data-inc="${it.id}" aria-label="Más"><svg><use href="#i-plus"/></svg></button>
+          <button type="button" data-inc="${esc(key)}" aria-label="Más" ${qty >= maxForKey(it, pack) ? 'disabled' : ''}><svg><use href="#i-plus"/></svg></button>
         </div>
       </div>`).join('');
     const t = totals();
@@ -673,7 +705,17 @@
       </a>`).join('');
 
     const can = it.status === 'disponible' && s.abierto;
-    state.sheetQty = clamp(state.cart[id] || 1, 1, Math.max(1, maxFor(it)));
+    // Con promoción se elige suelto o paquete; por omisión, el paquete (es lo que conviene).
+    const opts = $('#d-opts');
+    opts.hidden = !hasPromo(it) || !can;
+    if (hasPromo(it)) {
+      opts.innerHTML = [false, true].map((pack) => `
+        <button type="button" data-pack="${pack ? 1 : 0}">
+          <b>${esc(optLabel(it, pack))}</b><small>${fmt(unitPrice(it, pack))}${pack ? ` · ${fmt(unitPrice(it, pack) / it.promo.cantidad)} c/u` : ''}</small>
+        </button>`).join('');
+    }
+    state.sheetPack = hasPromo(it) && !state.cart[id];
+    sheetSync();
     paintSheetAdd(can);
 
     $('#sheet-body').scrollTop = 0;
@@ -688,31 +730,51 @@
     }
   }
 
+  const sheetKey = () => keyOf(state.sheetId, state.sheetPack);
+
+  // Cantidad inicial de la ficha según la opción elegida (lo que ya hay en el pedido, o 1).
+  function sheetSync() {
+    const it = state.byId.get(state.sheetId);
+    if (!it) return;
+    state.sheetQty = clamp(state.cart[sheetKey()] || 1, 1, Math.max(1, maxForKey(it, state.sheetPack)));
+    $$('#d-opts button').forEach((b) => b.classList.toggle('is-on', b.dataset.pack === (state.sheetPack ? '1' : '0')));
+  }
+
+  $('#d-opts').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-pack]');
+    if (!b) return;
+    state.sheetPack = b.dataset.pack === '1';
+    sheetSync();
+    paintSheetAdd(true);
+  });
+
   function paintSheetAdd(can) {
-    const id = state.sheetId;
-    const inCart = state.cart[id] || 0;
+    const it = state.byId.get(state.sheetId);
+    const inCart = state.cart[sheetKey()] || 0;
+    if (can && it && maxForKey(it, state.sheetPack) < 1) can = false; // ya no alcanza el stock para esta opción
     $('#d-stepper').hidden = !can;
     $('#d-qty').textContent = state.sheetQty;
     const btn = $('#d-add');
     btn.disabled = !can;
     $('span', btn).textContent = !can
-      ? (state.settings.abierto ? 'Agotado' : 'Pedidos en pausa')
-      : inCart ? (inCart === state.sheetQty ? 'Ver mi pedido' : 'Actualizar pedido') : 'Agregar al pedido';
+      ? (!state.settings.abierto ? 'Pedidos en pausa' : it && it.status === 'disponible' ? 'Sin piezas suficientes' : 'Agotado')
+      : inCart ? (inCart === state.sheetQty ? 'Ver mi pedido' : 'Actualizar pedido')
+        : `Agregar${it && it.price ? ` · ${fmt(lineTotal(it, state.sheetQty, state.sheetPack))}` : ' al pedido'}`;
   }
 
   $('#d-stepper').addEventListener('click', (e) => {
     const b = e.target.closest('[data-step]');
     if (!b) return;
     const it = state.byId.get(state.sheetId);
-    state.sheetQty = clamp(state.sheetQty + Number(b.dataset.step), 1, Math.max(1, it ? maxFor(it) : MAX_QTY));
+    state.sheetQty = clamp(state.sheetQty + Number(b.dataset.step), 1, Math.max(1, it ? maxForKey(it, state.sheetPack) : MAX_QTY));
     paintSheetAdd(true);
   });
 
   $('#d-add').addEventListener('click', () => {
-    const id = state.sheetId;
-    if (!id) return;
-    if ((state.cart[id] || 0) === state.sheetQty) { closeItem(); setTimeout(openList, 350); return; }
-    setQty(id, state.sheetQty, true);
+    if (!state.sheetId) return;
+    const key = sheetKey();
+    if ((state.cart[key] || 0) === state.sheetQty) { closeItem(); setTimeout(openList, 350); return; }
+    setQty(key, state.sheetQty, true);
     paintSheetAdd(true);
   });
 
@@ -926,7 +988,7 @@
     $('span', btn).textContent = 'Enviando…';
     try {
       const pedido = {
-        lineas: cartLines().map((l) => ({ id: l.it.id, qty: l.qty })),
+        lineas: cartLines().map((l) => ({ id: l.it.id, qty: l.qty, pack: l.pack })),
         nombre: F.nombre.value, telefono: tel, instagram: F.instagram.value,
         tipo: state.tipo, colonia: F.colonia.value, direccion: F.direccion.value, referencias: F.referencias.value,
         fueraZona: F.colonia.value === OTRA, coloniaOtra: F.coloniaOtra.value,
@@ -1014,7 +1076,8 @@
     const resumen = [
       `Pedido ${folio}`,
       '',
-      ...t.lines.map((l) => `  ${l.qty} × ${l.it.title}${l.it.price ? ` — ${fmt(lineTotal(l.it, l.qty))}` : ' — precio por confirmar'}`),
+      ...t.lines.map((l) => `  ${l.qty} × ${l.it.title}${hasPromo(l.it) ? ` (${l.pack ? `paquete de ${l.it.promo.cantidad}` : 'suelta'})` : ''}`
+        + `${l.it.price ? ` — ${fmt(lineTotal(l.it, l.qty, l.pack))}` : ' — precio por confirmar'}`),
       '',
       `Subtotal: ${fmt(t.subtotal)}`,
       t.envio ? `Envío: ${fmt(t.envio)}` : null,

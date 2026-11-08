@@ -68,6 +68,21 @@
 
 .brand-mark svg { fill: var(--sun); }
 
+/* Suelto o paquete (productos con promoción) */
+.d-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.d-opts[hidden] { display: none; }
+.d-opts button {
+  display: grid; gap: 2px; padding: 12px 14px; min-height: 56px; text-align: left; border-radius: var(--r-md);
+  border: 1.5px solid rgba(93, 64, 55, .15); background: var(--surface); transition: border-color .2s, background-color .2s;
+}
+.d-opts button b { font: 700 15px/1.2 var(--font-display); }
+.d-opts button small { font-size: 13px; color: var(--ink-2); }
+.d-opts button.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.d-opts button.is-on b { color: var(--accent); }
+.card-add { position: relative; }
+.card-add .count { top: -6px; right: -6px; background: var(--ink); }
+.li-opt { font-style: normal; font-weight: 700; color: var(--accent); }
+
 .cambio { display: grid; gap: 10px; }
 .cambio[hidden] { display: none; }
 .ap-field input:disabled { opacity: .5; }
