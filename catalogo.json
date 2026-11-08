@@ -73,8 +73,8 @@
       "unit": "rebanada",
       "category": "Pasteles",
       "description": "Rebanada de pastel suave con duraznos y crema. Se mantiene en refrigeración.",
-      "stock": 6,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": true,
       "images": ["fotos/pas-dur-1.webp"],
       "createdAt": "2026-11-08T20:05:32.721Z"
