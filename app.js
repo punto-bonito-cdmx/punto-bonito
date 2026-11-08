@@ -707,8 +707,8 @@
     const can = it.status === 'disponible' && s.abierto;
     // Con promoción se elige suelto o paquete; por omisión, el paquete (es lo que conviene).
     const opts = $('#d-opts');
-    opts.hidden = !hasPromo(it) || !can;
-    if (hasPromo(it)) {
+    if (opts) opts.hidden = !hasPromo(it) || !can;
+    if (opts && hasPromo(it)) {
       opts.innerHTML = [false, true].map((pack) => `
         <button type="button" data-pack="${pack ? 1 : 0}">
           <b>${esc(optLabel(it, pack))}</b><small>${fmt(unitPrice(it, pack))}${pack ? ` · ${fmt(unitPrice(it, pack) / it.promo.cantidad)} c/u` : ''}</small>
@@ -740,7 +740,8 @@
     $$('#d-opts button').forEach((b) => b.classList.toggle('is-on', b.dataset.pack === (state.sheetPack ? '1' : '0')));
   }
 
-  $('#d-opts').addEventListener('click', (e) => {
+  // ?. : un index.html viejo en caché no trae #d-opts; la ficha sigue funcionando sin él.
+  $('#d-opts')?.addEventListener('click', (e) => {
     const b = e.target.closest('[data-pack]');
     if (!b) return;
     state.sheetPack = b.dataset.pack === '1';
