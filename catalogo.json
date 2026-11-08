@@ -1,0 +1,154 @@
+{
+    "settings":  {
+                     "storeName":  "Punto Bonito",
+                     "tagline":  "Postres y cosas bonitas directo a tu puerta",
+                     "zona":  "San Sebastián Tecoloxtitlan, Pueblo de Santa Martha Acatitla, El Edén y Paraje Zacatepec, en Iztapalapa",
+                     "whatsapp":  "",
+                     "instagram":  "",
+                     "currency":  "MXN",
+                     "abierto":  true,
+                     "avisoPedido":  "Pide con un día de anticipación. Te confirmamos por WhatsApp.",
+                     "colonias":  [
+                                      "San Sebastián Tecoloxtitlan",
+                                      "Pueblo de Santa Martha Acatitla",
+                                      "El Edén",
+                                      "Paraje Zacatepec"
+                                  ],
+                     "diasEntrega":  [
+                                         5,
+                                         6,
+                                         0
+                                     ],
+                     "horarios":  [
+                                      "8:00 pm a 11:00 pm"
+                                  ],
+                     "anticipacionDias":  1,
+                     "costoEnvio":  0,
+                     "envioGratisDesde":  0,
+                     "pedidoMinimo":  0,
+                     "puntoEntrega":  "",
+                     "temporada":  "",
+                     "temporadaProgramada":  {
+                                                 "tema":  "revolucion",
+                                                 "desde":  "2026-11-12",
+                                                 "hasta":  "2026-11-22"
+                                             },
+                     "entregaAnticipada":  true,
+                     "extraAnticipada":  50,
+                     "fueraZona":  true,
+                     "extraFueraZona":  40,
+                     "beneficiario":  "",
+                     "clabe":  "",
+                     "banco":  ""
+                 },
+    "items":  [
+                  {
+                      "id":  "880b537af1",
+                      "sku":  "MUF-CHO",
+                      "seccion":  "postres",
+                      "title":  "Muffin de chocolate",
+                      "price":  0,
+                      "unit":  "pieza",
+                      "category":  "Muffins",
+                      "description":  "Muffin grande de chocolate, esponjoso y con mucho sabor a cacao. Ideal con café o leche.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  true,
+                      "images":  [
+                                     "fotos/muf-cho-1.webp",
+                                     "fotos/muf-cho-2.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:03:32.721Z"
+                  },
+                  {
+                      "id":  "2072a8a7d8",
+                      "sku":  "MUF-BLU",
+                      "seccion":  "postres",
+                      "title":  "Muffin de blueberry",
+                      "price":  0,
+                      "unit":  "pieza",
+                      "category":  "Muffins",
+                      "description":  "Muffin grande de vainilla con blueberries jugosos en cada mordida.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  false,
+                      "images":  [
+                                     "fotos/muf-blu-1.webp",
+                                     "fotos/muf-blu-2.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:04:32.721Z"
+                  },
+                  {
+                      "id":  "86546fa6d8",
+                      "sku":  "PAS-DUR",
+                      "seccion":  "postres",
+                      "title":  "Rebanada de pastel de durazno con crema",
+                      "price":  0,
+                      "unit":  "rebanada",
+                      "category":  "Pasteles",
+                      "description":  "Rebanada de pastel suave con duraznos y crema. Se mantiene en refrigeración.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  true,
+                      "images":  [
+                                     "fotos/pas-dur-1.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:05:32.721Z"
+                  },
+                  {
+                      "id":  "b0131b3206",
+                      "sku":  "CHE-ZAR",
+                      "seccion":  "postres",
+                      "title":  "Rebanada de cheesecake de zarzamora",
+                      "price":  0,
+                      "unit":  "rebanada",
+                      "category":  "Pasteles",
+                      "description":  "Rebanada de cheesecake cremoso cubierto con mermelada de zarzamora y orilla de crema batida. Se mantiene en refrigeración.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  false,
+                      "images":  [
+                                     "fotos/che-zar-1.webp",
+                                     "fotos/che-zar-2.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:06:32.721Z"
+                  },
+                  {
+                      "id":  "2ee6d0f51d",
+                      "sku":  "DON-MINI",
+                      "seccion":  "postres",
+                      "title":  "Mini donas con azúcar",
+                      "price":  0,
+                      "unit":  "bolsita",
+                      "category":  "Bocaditos",
+                      "description":  "Mini donas espolvoreadas con azúcar. Perfectas para compartir o para el lunch.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  false,
+                      "images":  [
+                                     "fotos/don-mini-1.webp",
+                                     "fotos/don-mini-2.webp",
+                                     "fotos/don-mini-3.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:07:32.721Z"
+                  },
+                  {
+                      "id":  "3b843abef8",
+                      "sku":  "CHOC-MINI",
+                      "seccion":  "postres",
+                      "title":  "Mini chocolatines",
+                      "price":  0,
+                      "unit":  "pieza",
+                      "category":  "Bocaditos",
+                      "description":  "Mini chocolatines de hojaldre rellenos de chocolate.",
+                      "stock":  null,
+                      "status":  "disponible",
+                      "featured":  false,
+                      "images":  [
+                                     "fotos/choc-mini-1.webp",
+                                     "fotos/choc-mini-2.webp"
+                                 ],
+                      "createdAt":  "2026-11-08T20:08:32.721Z"
+                  }
+              ]
+}

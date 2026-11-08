@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es-MX" data-modo="estatico">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Punto Bonito: postres y artículos con entrega a domicilio en Santa Martha Acatitla y San Sebastián Tecoloxtitla, Iztapalapa. Pide en línea o por Instagram.">
+  <meta name="theme-color" content="#fbf1ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#170f12" media="(prefers-color-scheme: dark)">
+  <title>Punto Bonito</title>
+  <link rel="icon" href="marca/favicon.ico" sizes="48x48">
+  <link rel="icon" href="marca/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="marca/icono-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="marca/apple-touch-icon.png">
+  <meta property="og:title" content="Punto Bonito · Postres & detalles">
+  <meta property="og:image" content="marca/logo-circulo-512.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="postres.css">
+  <link rel="stylesheet" href="halloween.css">
+  <link rel="stylesheet" href="revolucion.css">
+  <script src="theme.js"></script>
+</head>
+<body>
+  <svg width="0" height="0" class="sprite" aria-hidden="true">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></symbol>
+    <symbol id="i-cake" viewBox="0 0 24 24"><path d="M5 11h14l-1.4 8.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8z"/><path d="M4 11a4 4 0 0 1 4-4 4 4 0 0 1 8 0 4 4 0 0 1 4 4z"/><path d="M12 3v1"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M11 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7z"/><path d="M19 15v5M16.5 17.5h5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19.2z"/><path d="M9 10.5c.4 1.6 2 3.2 3.6 3.6l1-1 1.8.8-.4 1.4c-3 .3-6.4-3.1-6.1-6.1l1.4-.4.8 1.8z"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.2 6.8h.01"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8h14v-8M12 8v12"/><path d="M12 8c-1.5-3-5-4-5-1.5S10 8 12 8zM12 8c1.5-3 5-4 5-1.5S14 8 12 8z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+  </svg>
+
+  <div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="spooky" aria-hidden="true" hidden><i>🦇</i><i>👻</i><i>🦇</i><i>🕸️</i><i>🦇</i></div>
+  <div class="papel-picado" aria-hidden="true" hidden></div>
+
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="brand brand-img" href="#/" aria-label="Punto Bonito, inicio">
+        <img class="brand-circle" src="marca/logo-circulo-160.png" alt="" width="160" height="160">
+        <img class="brand-text osc" src="marca/logo-texto-700.png" alt="" width="700" height="198">
+        <img class="brand-text clr" src="marca/logo-texto-claro-700.png" alt="" width="700" height="198">
+        <span class="sr-only" data-store-name>Punto Bonito</span>
+      </a>
+      <nav class="tabs" aria-label="Secciones">
+        <a href="#/" data-nav="postres" class="is-active">Postres</a>
+        <a href="#/articulos" data-nav="articulos">Artículos</a>
+        <a href="#/como-pedir" data-nav="how">Cómo pedir</a>
+      </nav>
+      <div class="top-actions">
+        <a class="icon-btn" id="ig-top" href="#" target="_blank" rel="noopener" aria-label="Instagram" hidden><svg><use href="#i-insta"/></svg></a>
+        <button class="icon-btn" id="theme-btn" aria-label="Cambiar tema"><svg><use href="#i-moon"/></svg></button>
+        <button class="icon-btn list-btn" data-open-list aria-label="Mi pedido">
+          <svg><use href="#i-bag"/></svg><span class="count" data-list-count hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================= MENÚ ======================= -->
+    <section class="view is-active" id="view-home" data-view="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot-live"></span><span id="eyebrow-text">Entregas en Santa Martha y alrededores</span></p>
+          <h1 id="hero-title">Postres y cosas bonitas directo a tu <em>puerta</em></h1>
+          <ul class="hero-stats" id="hero-stats"></ul>
+          <div class="hero-cta">
+            <button class="btn btn-primary accent" id="to-grid"><svg><use href="#i-cake"/></svg>Ver postres</button>
+            <a class="btn btn-ghost" id="ig-cta" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-insta"/></svg>Pedir por Instagram</a>
+          </div>
+        </div>
+        <div class="hero-show" id="hero-show">
+          <div class="carousel" id="carousel" aria-roledescription="carrusel" aria-label="Destacados"></div>
+          <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+      </section>
+
+      <div class="marquee" id="marquee" aria-hidden="true"><div class="marquee-track"></div></div>
+
+      <div class="closed-bar" id="closed-bar" hidden>
+        <svg><use href="#i-info"/></svg><span>Por ahora no estamos tomando pedidos en línea. Escríbenos por Instagram para la próxima entrega.</span>
+      </div>
+
+      <div class="toolbar" id="toolbar">
+        <div class="toolbar-in">
+          <nav class="seg sec-tabs" id="sec-tabs" aria-label="Secciones">
+            <a href="#/" data-sec="postres" class="is-on">🍰 Postres <small></small></a>
+            <a href="#/articulos" data-sec="articulos">🎁 Artículos <small></small></a>
+          </nav>
+          <div class="chips" id="chips" role="tablist" aria-label="Categorías"></div>
+        </div>
+      </div>
+
+      <section class="grid-wrap">
+        <p class="result-line" id="result-line" aria-live="polite"></p>
+        <div class="bento menu" id="grid">
+          <div class="card skeleton"></div><div class="card skeleton"></div><div class="card skeleton"></div>
+          <div class="card skeleton"></div><div class="card skeleton"></div><div class="card skeleton"></div>
+        </div>
+        <div class="empty" id="empty" hidden>
+          <div class="empty-art"><svg><use href="#i-cake"/></svg></div>
+          <h3>Nada por aquí</h3>
+          <p>Prueba otra categoría.</p>
+          <button class="btn btn-ghost" id="clear-filters">Ver todo</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ======================= CÓMO PEDIR ======================= -->
+    <section class="view" id="view-how" data-view="how" hidden>
+      <div class="how">
+        <header class="how-head">
+          <h2>Cómo pedir</h2>
+          <p id="how-aviso">Pide con un día de anticipación. Te confirmamos por WhatsApp.</p>
+        </header>
+        <ol class="steps">
+          <li style="--i:0"><b>1</b><div><h3>Arma tu pedido</h3><p>Elige postres, artículos y cuántos quieres. Puedes mezclar las dos secciones en un mismo pedido.</p></div></li>
+          <li style="--i:1"><b>2</b><div><h3>Elige día y horario</h3><p id="how-dias">Entregamos viernes, sábado y domingo.</p></div></li>
+          <li style="--i:2"><b>3</b><div><h3>Paga como prefieras</h3><p id="how-pago">Transferencia o efectivo al recibir.</p></div></li>
+          <li style="--i:3"><b>4</b><div><h3>Te confirmamos</h3><p>Te escribimos por WhatsApp para confirmar la hora exacta de entrega.</p></div></li>
+        </ol>
+        <section class="how-card" id="how-early" hidden>
+          <h3><svg><use href="#i-clock"/></svg>¿Lo necesitas antes?</h3>
+          <p class="clause" id="how-clause"></p>
+        </section>
+        <section class="how-card">
+          <h3><svg><use href="#i-pin"/></svg>Dónde entregamos</h3>
+          <p id="how-zona"></p>
+          <ul class="col-list" id="how-colonias"></ul>
+        </section>
+        <section class="how-card" id="how-zona-card">
+          <h3><svg><use href="#i-chat"/></svg>¿Tu colonia no está?</h3>
+          <p>Escríbenos y vemos si llegamos. También puedes pedir en la página: elige <b>“Mi colonia no está en la lista”</b> y escribe la tuya.</p>
+          <p class="clause" id="how-zona-clause" hidden></p>
+          <div class="how-btns" id="how-zona-btns"></div>
+        </section>
+        <section class="how-card" id="how-ig-card" hidden>
+          <h3><svg><use href="#i-insta"/></svg>¿Prefieres Instagram?</h3>
+          <p>Mándanos mensaje directo con lo que quieres, tu colonia y el día. Ahí también publicamos el menú de cada semana.</p>
+          <a class="btn btn-primary" id="ig-how" href="#" target="_blank" rel="noopener"><svg><use href="#i-insta"/></svg><span>Abrir Instagram</span></a>
+        </section>
+        <a class="btn btn-primary accent block" href="#/"><svg><use href="#i-cake"/></svg>Ver postres</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= NAVEGACIÓN MÓVIL ======================= -->
+  <nav class="dock" aria-label="Navegación">
+    <span class="dock-glow" aria-hidden="true"></span>
+    <a href="#/" data-nav="postres" class="is-active"><svg><use href="#i-cake"/></svg><span>Postres</span></a>
+    <a href="#/articulos" data-nav="articulos"><svg><use href="#i-gift"/></svg><span>Artículos</span></a>
+    <a href="#/como-pedir" data-nav="how"><svg><use href="#i-info"/></svg><span>Cómo pedir</span></a>
+    <button data-open-list><svg><use href="#i-bag"/></svg><span>Mi pedido</span><span class="count" data-list-count hidden>0</span></button>
+  </nav>
+
+  <!-- ======================= DETALLE ======================= -->
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-backdrop" data-close-sheet></div>
+    <article class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="d-title">
+      <div class="sheet-grab" id="sheet-grab"><span></span></div>
+      <button class="icon-btn sheet-close" data-close-sheet aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+      <div class="sheet-body" id="sheet-body">
+        <div class="gallery">
+          <div class="gallery-track" id="g-track"></div>
+          <button class="g-nav prev" id="g-prev" aria-label="Foto anterior"><svg><use href="#i-left"/></svg></button>
+          <button class="g-nav next" id="g-next" aria-label="Foto siguiente"><svg><use href="#i-right"/></svg></button>
+          <div class="g-dots" id="g-dots"></div>
+        </div>
+        <div class="d-info">
+          <div class="d-chips" id="d-chips"></div>
+          <h2 id="d-title"></h2>
+          <div class="d-price-row">
+            <span class="d-price" id="d-price"></span>
+            <span class="d-unit" id="d-unit"></span>
+            <span class="status-pill" id="d-status"></span>
+          </div>
+          <p class="d-desc" id="d-desc"></p>
+          <div class="d-note apartable" id="d-note">
+            <svg><use href="#i-clock"/></svg><div><b>Entrega programada</b><span id="d-note-text"></span></div>
+          </div>
+          <div class="related" id="related" hidden>
+            <h4>Va bien con</h4>
+            <div class="related-track" id="related-track"></div>
+          </div>
+        </div>
+      </div>
+      <footer class="d-actions">
+        <button class="icon-btn lg" id="d-share" aria-label="Compartir"><svg><use href="#i-share"/></svg></button>
+        <div class="stepper lg" id="d-stepper">
+          <button type="button" data-step="-1" aria-label="Menos"><svg><use href="#i-minus"/></svg></button>
+          <output id="d-qty">1</output>
+          <button type="button" data-step="1" aria-label="Más"><svg><use href="#i-plus"/></svg></button>
+        </div>
+        <button class="btn btn-primary accent grow" id="d-add"><svg><use href="#i-bag"/></svg><span>Agregar</span></button>
+      </footer>
+    </article>
+  </div>
+
+  <!-- ======================= MI PEDIDO ======================= -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="sheet-backdrop" data-close-list></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="list-title">
+      <header class="drawer-head">
+        <div>
+          <h2 id="list-title">Mi pedido</h2>
+          <p id="list-sub">Lo que vas a pedir.</p>
+        </div>
+        <button class="icon-btn" data-close-list aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+      </header>
+      <div class="drawer-body" id="list-body"></div>
+      <footer class="drawer-foot" id="list-foot">
+        <div class="totals" id="list-totals"></div>
+        <p class="list-hint" id="list-hint"></p>
+        <button class="btn btn-primary accent block" id="to-checkout"><svg><use href="#i-right"/></svg><span>Continuar</span></button>
+        <button class="btn btn-link" id="list-clear"><svg><use href="#i-trash"/></svg>Vaciar pedido</button>
+      </footer>
+    </aside>
+  </div>
+
+  <!-- ======================= DATOS DE ENTREGA Y PAGO ======================= -->
+  <div class="drawer ap" id="ap" hidden>
+    <div class="sheet-backdrop" data-close-ap></div>
+    <aside class="drawer-panel ap-panel" role="dialog" aria-modal="true" aria-labelledby="ap-title">
+      <form id="ap-form" class="ap-form" novalidate>
+        <header class="drawer-head">
+          <div>
+            <h2 id="ap-title">Entrega y pago</h2>
+            <p id="ap-item"></p>
+          </div>
+          <button type="button" class="icon-btn" data-close-ap aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+        </header>
+        <div class="drawer-body ap-body">
+          <fieldset class="ap-group">
+            <legend>Tus datos</legend>
+            <label class="ap-field"><span>Nombre</span><input name="nombre" autocomplete="name" maxlength="80" required></label>
+            <label class="ap-field"><span>WhatsApp <small>(10 dígitos)</small></span><input name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" required placeholder="55 1234 5678"></label>
+            <label class="ap-field"><span>Instagram <small>(opcional)</small></span><input name="instagram" autocomplete="off" maxlength="40" placeholder="@usuario"></label>
+          </fieldset>
+
+          <fieldset class="ap-group">
+            <legend>Entrega</legend>
+            <div class="seg ap-seg" id="tipo-seg" hidden>
+              <button type="button" data-tipo="domicilio" class="is-on">A domicilio</button>
+              <button type="button" data-tipo="recoger">Paso a recoger</button>
+            </div>
+            <p class="ap-how" id="pickup-info" hidden></p>
+            <div id="addr-fields">
+              <label class="ap-field"><span>Colonia</span><select name="colonia" required></select></label>
+              <div class="otra-zona" id="otra-zona" hidden>
+                <label class="ap-field"><span>¿Cuál es tu colonia?</span><input name="coloniaOtra" maxlength="80" placeholder="Ej. Ermita Zaragoza"></label>
+                <p class="clause" id="zona-clause"></p>
+              </div>
+              <label class="ap-field"><span>Calle y número</span><input name="direccion" autocomplete="street-address" maxlength="160"></label>
+              <label class="ap-field"><span>Referencias <small>(opcional)</small></span><input name="referencias" maxlength="200" placeholder="Portón negro, entre calles…"></label>
+            </div>
+            <div class="ap-row">
+              <label class="ap-field"><span>Día</span><select name="fecha" required></select></label>
+              <label class="ap-field" id="horario-field"><span>Horario</span><select name="horario" required></select></label>
+              <label class="ap-field" id="hora-field" hidden><span>¿A qué hora?</span><input name="horaAnticipada" maxlength="40" placeholder="Ej. 5:00 pm"></label>
+            </div>
+            <label class="ap-check" id="anticipada-box" hidden>
+              <input type="checkbox" name="anticipada">
+              <span><b>Lo quiero antes</b> — otro día u hora antes de las 8:00 pm. Cargo extra de <b data-extra>$50</b>.</span>
+            </label>
+            <p class="clause" id="anticipada-clause" hidden></p>
+          </fieldset>
+
+          <fieldset class="ap-group">
+            <legend>Pago</legend>
+            <div class="pay-opts" id="pay-opts">
+              <label class="pay-opt" data-pay="transferencia"><input type="radio" name="pago" value="transferencia"><span><svg><use href="#i-share"/></svg><b>Transferencia</b><small>Te damos la CLABE al terminar</small></span></label>
+              <label class="pay-opt"><input type="radio" name="pago" value="efectivo"><span><svg><use href="#i-cash"/></svg><b>Efectivo</b><small>Pagas al recibir</small></span></label>
+            </div>
+            <label class="ap-field" id="cambio-field" hidden><span>¿Con cuánto pagas? <small>(para llevarte cambio)</small></span><input name="pagaCon" type="number" inputmode="numeric" min="0" step="1" placeholder="Ej. 500"></label>
+          </fieldset>
+
+          <label class="ap-field"><span>Notas <small>(opcional)</small></span><input name="notas" maxlength="400" placeholder="Es para regalo, sin…"></label>
+          <label class="ap-trap" aria-hidden="true">No llenar<input name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="ap-sum" id="ap-sum"></div>
+          <p class="ap-error" id="ap-error" hidden></p>
+        </div>
+        <footer class="drawer-foot">
+          <button class="btn btn-primary accent block" type="submit" id="ap-send"><svg><use href="#i-check"/></svg><span>Hacer pedido</span></button>
+        </footer>
+      </form>
+      <div class="ap-done" id="ap-done" hidden>
+        <div class="empty-art"><svg><use href="#i-check"/></svg></div>
+        <h2>¡Pedido recibido!</h2>
+        <p id="ap-done-text"></p>
+        <div class="bank" id="bank" hidden></div>
+        <a class="btn btn-primary btn-wa block" id="done-wa" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-chat"/></svg><span>Enviar por WhatsApp</span></a>
+        <a class="btn btn-ghost block" id="done-ig" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-insta"/></svg><span>Síguenos en Instagram</span></a>
+        <button class="btn btn-link" type="button" data-close-ap>Volver al menú</button>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="site-foot" id="site-foot">
+    <p><b data-store-name>Punto Bonito</b> · <span id="foot-zona"></span></p>
+    <p id="foot-links"></p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

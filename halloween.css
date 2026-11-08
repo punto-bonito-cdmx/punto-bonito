@@ -1,0 +1,70 @@
+/* ============================================================
+   Temporada de Halloween — se activa con body.tema-halloween
+   (Ajustes → Temporada). Quitarla regresa a la paleta normal.
+   ============================================================ */
+
+body.tema-halloween {
+  --bg: #fff3e6;
+  --bg-2: #f8e0c8;
+  --surface: #fffaf4;
+  --ink: #23142b;
+  --ink-2: #5e4a66;
+  --ink-3: #8f7a96;
+  --line: rgba(35, 20, 43, .13);
+  --glass: rgba(255, 250, 244, .78);
+  --accent: #e8590c;
+  --accent-soft: rgba(232, 89, 12, .13);
+  --sun: #ffb22e;
+  --plum: #6d28d9;
+  --plum-soft: rgba(109, 40, 217, .14);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body.tema-halloween {
+    --bg: #110a16; --bg-2: #1f1427; --surface: #1d1325; --ink: #fbefe6; --ink-2: #c9b3c9; --ink-3: #8b7590;
+    --line: rgba(251, 239, 230, .12); --glass: rgba(29, 19, 37, .76);
+    --accent: #ff7a1a; --accent-soft: rgba(255, 122, 26, .16); --plum: #a78bfa; --plum-soft: rgba(167, 139, 250, .16);
+  }
+}
+:root[data-theme="dark"] body.tema-halloween {
+  --bg: #110a16; --bg-2: #1f1427; --surface: #1d1325; --ink: #fbefe6; --ink-2: #c9b3c9; --ink-3: #8b7590;
+  --line: rgba(251, 239, 230, .12); --glass: rgba(29, 19, 37, .76);
+  --accent: #ff7a1a; --accent-soft: rgba(255, 122, 26, .16); --plum: #a78bfa; --plum-soft: rgba(167, 139, 250, .16);
+}
+
+/* Murciélagos y fantasmas que flotan detrás del contenido. */
+.spooky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.spooky i {
+  position: absolute; font-style: normal; font-size: 30px; opacity: .55;
+  animation: flutter 14s ease-in-out infinite alternate;
+}
+.spooky i:nth-child(1) { top: 12%; left: 6%; }
+.spooky i:nth-child(2) { top: 58%; right: 5%; font-size: 40px; opacity: .35; animation-duration: 18s; }
+.spooky i:nth-child(3) { top: 30%; right: 22%; font-size: 22px; animation-duration: 11s; }
+.spooky i:nth-child(4) { top: 0; right: 0; font-size: 70px; opacity: .3; animation: none; }
+.spooky i:nth-child(5) { bottom: 18%; left: 14%; font-size: 24px; animation-duration: 16s; }
+@keyframes flutter {
+  0% { transform: translate(0, 0) rotate(-6deg); }
+  50% { transform: translate(40px, -24px) rotate(8deg); }
+  100% { transform: translate(-20px, 18px) rotate(-4deg); }
+}
+
+.tema-halloween .hero h1 em { color: var(--accent); text-shadow: 0 0 28px color-mix(in srgb, var(--accent) 45%, transparent); }
+.tema-halloween .brand-mark { background: var(--accent); }
+.tema-halloween .brand-mark svg { fill: #23142b; stroke: var(--sun); }
+.tema-halloween .marquee { background: #23142b; color: #ffb22e; }
+.tema-halloween .dot-live { background: var(--accent); }
+.tema-halloween .s-nuevo { background: var(--plum); }
+.tema-halloween .ph-art {
+  background:
+    radial-gradient(circle at 30% 20%, hsl(var(--h) 90% 70% / .45), transparent 55%),
+    linear-gradient(150deg, #3b1d4f, #ff7a1a 130%);
+}
+
+/* Cláusula de entrega anticipada */
+.clause { padding: 12px 14px; border-radius: 14px; border: 2px dashed color-mix(in srgb, var(--accent) 45%, transparent); background: var(--accent-soft); font-size: 13.5px; line-height: 1.45; color: var(--ink); }
+.how-card .clause { color: var(--ink); }
+.ap-check.is-on { border-color: var(--accent); background: var(--accent-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .spooky i { animation: none; }
+}

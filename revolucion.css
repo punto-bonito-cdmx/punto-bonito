@@ -1,0 +1,103 @@
+/* ============================================================
+   Temporada Revolución Mexicana — body.tema-revolucion
+   Se activa sola por fechas (Ajustes → Tema programado).
+   ============================================================ */
+
+body.tema-revolucion {
+  --bg: #f7f0e1;
+  --bg-2: #ecdfc4;
+  --surface: #fffaf0;
+  --ink: #2b1d14;
+  --ink-2: #6a5444;
+  --ink-3: #9a8572;
+  --line: rgba(43, 29, 20, .14);
+  --glass: rgba(255, 250, 240, .8);
+  --accent: #c8102e;
+  --accent-ink: #fff;
+  --accent-soft: rgba(200, 16, 46, .11);
+  --sun: #f2c14e;
+  --mint: #006847;
+  --mint-soft: rgba(0, 104, 71, .13);
+  --plum: #006847;
+  --plum-soft: rgba(0, 104, 71, .13);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body.tema-revolucion {
+    --bg: #17120d; --bg-2: #241c14; --surface: #221a13; --ink: #f6ecdc; --ink-2: #cdb9a0; --ink-3: #8f7c66;
+    --line: rgba(246, 236, 220, .12); --glass: rgba(34, 26, 19, .78);
+    --accent: #ef3b4f; --accent-soft: rgba(239, 59, 79, .16); --mint: #2fb37f; --mint-soft: rgba(47, 179, 127, .15);
+    --plum: #2fb37f; --plum-soft: rgba(47, 179, 127, .15);
+  }
+}
+:root[data-theme="dark"] body.tema-revolucion {
+  --bg: #17120d; --bg-2: #241c14; --surface: #221a13; --ink: #f6ecdc; --ink-2: #cdb9a0; --ink-3: #8f7c66;
+  --line: rgba(246, 236, 220, .12); --glass: rgba(34, 26, 19, .78);
+  --accent: #ef3b4f; --accent-soft: rgba(239, 59, 79, .16); --mint: #2fb37f; --mint-soft: rgba(47, 179, 127, .15);
+  --plum: #2fb37f; --plum-soft: rgba(47, 179, 127, .15);
+}
+
+/* Fondo: brillos verde y rojo en lugar de los de siempre. */
+.tema-revolucion .ambient span:nth-child(1) { --c: #006847; opacity: .16; }
+.tema-revolucion .ambient span:nth-child(2) { --c: #f2c14e; opacity: .2; }
+.tema-revolucion .ambient span:nth-child(3) { --c: #c8102e; opacity: .14; }
+
+/* ---------- papel picado: verde, blanco y rojo ---------- */
+.papel-picado {
+  position: absolute; z-index: 30; top: var(--top-h); left: 0; right: 0; height: 46px;
+  display: flex; justify-content: center; gap: 6px; overflow: hidden; pointer-events: none;
+  padding: 0 8px;
+}
+.papel-picado::before {
+  content: ''; position: absolute; top: 3px; left: 0; right: 0; height: 2px; background: rgba(43, 29, 20, .35);
+}
+.papel-picado span {
+  position: relative; flex: 0 0 auto; width: 46px; height: 40px; margin-top: 3px;
+  background: var(--flag);
+  /* Orilla de picos y agujeros recortados, como el papel de china. */
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 87.5% 100%, 75% 78%, 62.5% 100%, 50% 78%, 37.5% 100%, 25% 78%, 12.5% 100%, 0 78%);
+  -webkit-mask: radial-gradient(circle at 50% 38%, transparent 5px, #000 5.5px) , radial-gradient(circle, transparent 2.5px, #000 3px) 0 0 / 11px 11px;
+  -webkit-mask-composite: source-in;
+          mask: radial-gradient(circle at 50% 38%, transparent 5px, #000 5.5px), radial-gradient(circle, transparent 2.5px, #000 3px) 0 0 / 11px 11px;
+          mask-composite: intersect;
+  transform-origin: top center;
+  animation: sway 4.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -0.37s);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+}
+.papel-picado span:nth-child(3n + 1) { --flag: #006847; }
+.papel-picado span:nth-child(3n + 2) { --flag: #f4efe4; }
+.papel-picado span:nth-child(3n + 3) { --flag: #c8102e; }
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+
+.tema-revolucion .hero { padding-top: 58px; }
+.tema-revolucion .hero h1 em { color: var(--accent); }
+.tema-revolucion .brand-mark { background: #006847; }
+.tema-revolucion .brand-mark svg { fill: #f4efe4; stroke: #c8102e; }
+.tema-revolucion .marquee {
+  background: linear-gradient(90deg, #006847 0 33.3%, #f4efe4 33.3% 66.6%, #c8102e 66.6%);
+  color: #2b1d14;
+}
+.tema-revolucion .marquee-track span { padding: 2px 10px; background: rgba(255, 250, 240, .88); border-radius: 8px; }
+.tema-revolucion .dot-live { background: #006847; }
+.tema-revolucion .s-nuevo { background: #006847; }
+.tema-revolucion .ph-art {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .35), transparent 55%),
+    linear-gradient(150deg, #006847, #2b1d14 70%, #c8102e 140%);
+}
+
+@media (max-width: 639px) {
+  .papel-picado span { width: 34px; height: 32px; }
+  .tema-revolucion .hero { padding-top: 48px; }
+}
+@media (min-width: 900px) {
+  .tema-revolucion .hero { padding-top: 84px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .papel-picado span { animation: none; }
+}
+
+/* ---------- "Mi colonia no está" ---------- */
+.otra-zona { display: grid; gap: 10px; }
+.how-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.how-btns:empty { display: none; }
