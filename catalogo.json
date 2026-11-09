@@ -58,7 +58,7 @@
       "unit": "pieza",
       "category": "Muffins",
       "description": "Muffin grande de vainilla con blueberries jugosos en cada mordida.",
-      "stock": 6,
+      "stock": 4,
       "status": "disponible",
       "featured": false,
       "images": ["fotos/muf-blu-1.webp", "fotos/muf-blu-2.webp"],
