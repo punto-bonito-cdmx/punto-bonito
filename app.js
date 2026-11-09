@@ -59,6 +59,15 @@
   const dayLabel = (ymd) => new Intl.DateTimeFormat('es-MX', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' })
     .format(new Date(`${ymd}T12:00:00Z`));
   const igUrl = (u) => `https://instagram.com/${encodeURIComponent(u)}`;
+  // settings.facebook acepta el usuario de la Página ("puntobonito"), "profile.php?id=…" o la URL completa.
+  const fbUrl = (f) => (/^https?:\/\//i.test(f) ? f : `https://www.facebook.com/${String(f).replace(/^\/+/, '')}`);
+  const fbId = (f) => {
+    const m = String(f).match(/[?&]id=(\d+)/);
+    if (m) return m[1];
+    return String(f).replace(/^https?:\/\/[^/]+\//i, '').split(/[/?#]/)[0];
+  };
+  // Messenger de la Página: el cliente escribe a "Punto Bonito", nunca ve un número personal.
+  const msgUrl = (s) => s.messenger || (s.facebook ? `https://m.me/${encodeURIComponent(fbId(s.facebook))}` : '');
   const waUrl = (text) => `https://wa.me/${state.settings.whatsapp}?text=${encodeURIComponent(text)}`;
 
   // Sin foto todavía: ilustración de color por tipo de postre.
@@ -233,6 +242,10 @@
       $('#ig-top').href = igUrl(s.instagram);
       $('#ig-top').hidden = false;
     }
+    const fbTop = $('#fb-top');
+    if (fbTop && s.facebook) { fbTop.href = fbUrl(s.facebook); fbTop.hidden = false; }
+    const msgCta = $('#msg-cta');
+    if (msgCta && msgUrl(s)) { msgCta.href = msgUrl(s); msgCta.hidden = false; }
 
     const featured = state.items.filter((i) => i.featured && i.status === 'disponible');
     const slides = (featured.length ? featured : avail).slice(0, 6);
@@ -1143,6 +1156,8 @@
     const ig = $('#done-ig');
     ig.hidden = !s.instagram;
     if (s.instagram) ig.href = igUrl(s.instagram);
+    const fb = $('#done-fb');
+    if (fb) { fb.hidden = !s.facebook; if (s.facebook) fb.href = fbUrl(s.facebook); }
     apForm.hidden = true;
     $('#ap-done').hidden = false;
   }
@@ -1182,19 +1197,76 @@
     $('#how-zona-clause').textContent = zonaClause();
     const btns = [];
     if (s.whatsapp) btns.push(`<a class="btn btn-primary btn-wa" href="${esc(waUrl('¡Hola! Quiero saber si entregan en mi colonia: '))}" target="_blank" rel="noopener"><svg><use href="#i-chat"/></svg>WhatsApp</a>`);
+    if (msgUrl(s)) btns.push(`<a class="btn btn-primary" href="${esc(msgUrl(s))}" target="_blank" rel="noopener"><svg><use href="#i-msg"/></svg>Messenger</a>`);
     if (s.instagram) btns.push(`<a class="btn btn-ghost" href="${esc(igUrl(s.instagram))}" target="_blank" rel="noopener"><svg><use href="#i-insta"/></svg>Instagram</a>`);
     $('#how-zona-btns').innerHTML = btns.join('');
-    $('#how-ig-card').hidden = !s.instagram;
-    if (s.instagram) {
-      $('#ig-how').href = igUrl(s.instagram);
-      $('span', $('#ig-how')).textContent = `@${s.instagram}`;
-    }
+
+    // Escríbenos: Messenger / Instagram / formulario que llega al correo. Sin número personal.
+    const cbtns = [];
+    if (msgUrl(s)) cbtns.push(`<a class="btn btn-primary" href="${esc(msgUrl(s))}" target="_blank" rel="noopener"><svg><use href="#i-msg"/></svg>Messenger</a>`);
+    if (s.facebook) cbtns.push(`<a class="btn btn-ghost" href="${esc(fbUrl(s.facebook))}" target="_blank" rel="noopener"><svg><use href="#i-fb"/></svg>Facebook</a>`);
+    if (s.instagram) cbtns.push(`<a class="btn btn-ghost" href="${esc(igUrl(s.instagram))}" target="_blank" rel="noopener"><svg><use href="#i-insta"/></svg>@${esc(s.instagram)}</a>`);
+    const cb = $('#contact-btns');
+    if (cb) cb.innerHTML = cbtns.join('');
+    const cf = $('#contact-form');
+    if (cf) cf.hidden = !s.correoPedidos;
+    const card = $('#how-contact');
+    if (card) card.hidden = !cbtns.length && !s.correoPedidos;
   }
+
+  const contactForm = $('#contact-form');
+  contactForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = contactForm.elements;
+    const err = $('#contact-error');
+    const nombre = f.nombre.value.trim();
+    const contacto = f.contacto.value.trim();
+    const mensaje = f.mensaje.value.trim();
+    const tel = contacto.replace(/\D/g, '');
+    const esCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto);
+    let problema = '';
+    if (!nombre) problema = 'Escribe tu nombre.';
+    else if (!esCorreo && tel.length !== 10) problema = 'Déjanos un correo o un teléfono de 10 dígitos para responderte.';
+    else if (mensaje.length < 3) problema = 'Escribe tu mensaje.';
+    err.hidden = !problema;
+    err.textContent = problema;
+    if (problema) return;
+    const btn = $('button[type="submit"]', contactForm);
+    btn.disabled = true;
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(state.settings.correoPedidos)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Mensaje desde la página · ${nombre}`,
+          _template: 'box',
+          _captcha: 'false',
+          _honey: f.website.value,
+          ...(esCorreo ? { _replyto: contacto } : {}),
+          Nombre: nombre,
+          Contacto: esCorreo ? contacto : tel,
+          Mensaje: mensaje,
+        }),
+      });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || String(out.success) !== 'true') throw new Error(out.message || `Error ${res.status}`);
+      contactForm.reset();
+      contactForm.hidden = true;
+      $('#contact-ok').hidden = false;
+    } catch {
+      err.hidden = false;
+      err.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.';
+    } finally {
+      btn.disabled = false;
+    }
+  });
 
   function renderFooter() {
     const s = state.settings;
     $('#foot-zona').textContent = s.zona || '';
     const links = [];
+    if (s.facebook) links.push(`<a href="${esc(fbUrl(s.facebook))}" target="_blank" rel="noopener">Facebook</a>`);
+    if (msgUrl(s)) links.push(`<a href="${esc(msgUrl(s))}" target="_blank" rel="noopener">Messenger</a>`);
     if (s.instagram) links.push(`<a href="${esc(igUrl(s.instagram))}" target="_blank" rel="noopener">Instagram @${esc(s.instagram)}</a>`);
     if (s.whatsapp) links.push(`<a href="https://wa.me/${esc(s.whatsapp)}" target="_blank" rel="noopener">WhatsApp</a>`);
     $('#foot-links').innerHTML = links.join(' · ');

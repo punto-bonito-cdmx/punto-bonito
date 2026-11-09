@@ -18,6 +18,7 @@ Todo se edita en `catalogo.json`:
 | Agotado / disponible | `items[].status` (`"disponible"` o `"agotado"`) |
 | WhatsApp que recibe los pedidos | `settings.whatsapp` (con lada: `5255…`) |
 | Instagram | `settings.instagram` (sin @) |
+| Facebook | `settings.facebook`: usuario de la Página, `profile.php?id=…` o URL completa. El botón de Messenger sale solo (`m.me/…`); `settings.messenger` lo sobrescribe |
 | Datos de transferencia | `settings.clabe`, `settings.beneficiario`, `settings.banco` |
 | Pausar pedidos | `settings.abierto` (`false`) |
 | Temporada | `settings.temporadaProgramada` (`halloween` o `revolucion`, con fechas) |
