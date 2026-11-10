@@ -117,3 +117,25 @@ body.tema-revolucion {
 .how-btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .how-btns:empty { display: none; }
 .papel-picado .linea { fill: none; stroke: var(--ink); }
+
+/* ---------- bigote revolucionario en la esquina superior derecha de cada producto ---------- */
+/* Bigote de manubrio, poblado y con puntas caídas: guiño a Villa y Zapata (dibujo propio). */
+.tema-revolucion .card-tilt::after {
+  content: ''; position: absolute; z-index: 2; top: 10px; right: 10px; width: 50px; height: 50px; border-radius: 50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 28'%3E%3Cpath fill='%232a1f16' d='M32 8.5C27 3.5 19 3.6 14 8.6 10.4 12.3 6.4 13.6 1.8 10.6 2.6 18.4 9 22.6 16.4 20.6 22.3 19 27.2 15.8 32 13.4 36.8 15.8 41.7 19 47.6 20.6 55 22.6 61.4 18.4 62.2 10.6 57.6 13.6 53.6 12.3 50 8.6 45 3.6 37 3.5 32 8.5Z'/%3E%3Cpath fill='none' stroke='%235e4b3a' stroke-width='1.1' stroke-linecap='round' d='M20 9.5c-2 3-5 5-8 5.5M26 8.5c-1.5 3.5-4 6-7 7.5M44 9.5c2 3 5 5 8 5.5M38 8.5c1.5 3.5 4 6 7 7.5'/%3E%3C/svg%3E") center / 36px auto no-repeat,
+    #f2e8d5;
+  border: 2px dashed #c08a2e;
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .45);
+  transform: rotate(8deg);
+  transition: transform .4s var(--spring);
+  pointer-events: none;
+}
+.tema-revolucion .card:hover .card-tilt::after { transform: rotate(-6deg) scale(1.08); }
+/* "Favorito" baja un poco para no taparse con el bigote. */
+.tema-revolucion .card .sticker { top: 68px; }
+.tema-revolucion .card.is-sold .card-tilt::after { filter: grayscale(1); opacity: .7; }
+@media (max-width: 639px) {
+  .tema-revolucion .card-tilt::after { width: 40px; height: 40px; top: 8px; right: 8px; background-size: 29px auto, auto; }
+  .tema-revolucion .card .sticker { top: 56px; }
+}
