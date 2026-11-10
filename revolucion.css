@@ -1,100 +1,103 @@
 /* ============================================================
    Temporada Revolución Mexicana — body.tema-revolucion
-   Se activa sola por fechas (Ajustes → Tema programado).
+   Se activa sola por fechas (settings.temporadaProgramada).
+   Estética de foto antigua y cartel de época: sepia, ocre, ladrillo
+   y verde olivo, con una vía de tren bajo el encabezado. Sin bandera
+   ni "Viva México": eso es de septiembre.
    ============================================================ */
 
 body.tema-revolucion {
-  --bg: #f7f0e1;
-  --bg-2: #ecdfc4;
-  --surface: #fffaf0;
-  --ink: #2b1d14;
-  --ink-2: #6a5444;
-  --ink-3: #9a8572;
-  --line: rgba(43, 29, 20, .14);
-  --glass: rgba(255, 250, 240, .8);
-  --accent: #c8102e;
+  --bg: #f2e8d5;
+  --bg-2: #e6d6b8;
+  --surface: #fbf5e8;
+  --ink: #2a1f16;
+  --ink-2: #5e4b3a;
+  --ink-3: #8f7b66;
+  --line: rgba(42, 31, 22, .14);
+  --glass: rgba(251, 245, 232, .82);
+  --accent: #9e3b22;
   --accent-ink: #fff;
-  --accent-soft: rgba(200, 16, 46, .11);
-  --sun: #f2c14e;
-  --mint: #006847;
-  --mint-soft: rgba(0, 104, 71, .13);
-  --plum: #006847;
-  --plum-soft: rgba(0, 104, 71, .13);
+  --accent-soft: rgba(158, 59, 34, .12);
+  --sun: #c08a2e;
+  --mint: #5f6b3a;
+  --mint-soft: rgba(95, 107, 58, .14);
+  --plum: #5f6b3a;
+  --plum-soft: rgba(95, 107, 58, .14);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) body.tema-revolucion {
-    --bg: #17120d; --bg-2: #241c14; --surface: #221a13; --ink: #f6ecdc; --ink-2: #cdb9a0; --ink-3: #8f7c66;
-    --line: rgba(246, 236, 220, .12); --glass: rgba(34, 26, 19, .78);
-    --accent: #ef3b4f; --accent-soft: rgba(239, 59, 79, .16); --mint: #2fb37f; --mint-soft: rgba(47, 179, 127, .15);
-    --plum: #2fb37f; --plum-soft: rgba(47, 179, 127, .15);
+    --bg: #16110c; --bg-2: #221a12; --surface: #211913; --ink: #f1e6d2; --ink-2: #ccb89c; --ink-3: #8f7b66;
+    --line: rgba(241, 230, 210, .12); --glass: rgba(33, 25, 19, .8);
+    --accent: #d9643f; --accent-soft: rgba(217, 100, 63, .16); --mint: #a3ad6b; --mint-soft: rgba(163, 173, 107, .15);
+    --plum: #a3ad6b; --plum-soft: rgba(163, 173, 107, .15);
   }
 }
 :root[data-theme="dark"] body.tema-revolucion {
-  --bg: #17120d; --bg-2: #241c14; --surface: #221a13; --ink: #f6ecdc; --ink-2: #cdb9a0; --ink-3: #8f7c66;
-  --line: rgba(246, 236, 220, .12); --glass: rgba(34, 26, 19, .78);
-  --accent: #ef3b4f; --accent-soft: rgba(239, 59, 79, .16); --mint: #2fb37f; --mint-soft: rgba(47, 179, 127, .15);
-  --plum: #2fb37f; --plum-soft: rgba(47, 179, 127, .15);
+  --bg: #16110c; --bg-2: #221a12; --surface: #211913; --ink: #f1e6d2; --ink-2: #ccb89c; --ink-3: #8f7b66;
+  --line: rgba(241, 230, 210, .12); --glass: rgba(33, 25, 19, .8);
+  --accent: #d9643f; --accent-soft: rgba(217, 100, 63, .16); --mint: #a3ad6b; --mint-soft: rgba(163, 173, 107, .15);
+  --plum: #a3ad6b; --plum-soft: rgba(163, 173, 107, .15);
 }
 
-/* Fondo: brillos verde y rojo en lugar de los de siempre. */
-.tema-revolucion .ambient span:nth-child(1) { --c: #006847; opacity: .16; }
-.tema-revolucion .ambient span:nth-child(2) { --c: #f2c14e; opacity: .2; }
-.tema-revolucion .ambient span:nth-child(3) { --c: #c8102e; opacity: .14; }
+/* Fondo: brillos ocre y ladrillo, como papel viejo. */
+.tema-revolucion .ambient span:nth-child(1) { --c: #c08a2e; opacity: .2; }
+.tema-revolucion .ambient span:nth-child(2) { --c: #9e3b22; opacity: .12; }
+.tema-revolucion .ambient span:nth-child(3) { --c: #5f6b3a; opacity: .14; }
 
-/* ---------- papel picado: verde, blanco y rojo ---------- */
+/* ---------- vía de tren bajo el encabezado (reusa el contenedor .papel-picado) ---------- */
 .papel-picado {
-  position: absolute; z-index: 30; top: var(--top-h); left: 0; right: 0; height: 46px;
-  display: flex; justify-content: center; gap: 6px; overflow: hidden; pointer-events: none;
-  padding: 0 8px;
+  position: absolute; z-index: 30; top: var(--top-h); left: 0; right: 0; height: 36px;
+  overflow: hidden; pointer-events: none;
+  --riel: rgba(94, 75, 58, .7);
+  background:
+    linear-gradient(var(--riel), var(--riel)) 0 26px / 100% 2px no-repeat,
+    linear-gradient(var(--riel), var(--riel)) 0 31px / 100% 2px no-repeat,
+    repeating-linear-gradient(90deg, rgba(94, 62, 38, .55) 0 7px, transparent 7px 20px) 0 24px / 100% 11px no-repeat;
 }
-.papel-picado::before {
-  content: ''; position: absolute; top: 3px; left: 0; right: 0; height: 2px; background: rgba(43, 29, 20, .35);
+.papel-picado .tren {
+  position: absolute; left: 0; bottom: 8px; font-size: 24px; line-height: 1;
+  filter: sepia(.55) saturate(1.1);
+  animation: viaje 26s linear infinite;
 }
-.papel-picado span {
-  position: relative; flex: 0 0 auto; width: 46px; height: 40px; margin-top: 3px;
-  background: var(--flag);
-  /* Orilla de picos y agujeros recortados, como el papel de china. */
-  clip-path: polygon(0 0, 100% 0, 100% 78%, 87.5% 100%, 75% 78%, 62.5% 100%, 50% 78%, 37.5% 100%, 25% 78%, 12.5% 100%, 0 78%);
-  -webkit-mask: radial-gradient(circle at 50% 38%, transparent 5px, #000 5.5px) , radial-gradient(circle, transparent 2.5px, #000 3px) 0 0 / 11px 11px;
-  -webkit-mask-composite: source-in;
-          mask: radial-gradient(circle at 50% 38%, transparent 5px, #000 5.5px), radial-gradient(circle, transparent 2.5px, #000 3px) 0 0 / 11px 11px;
-          mask-composite: intersect;
-  transform-origin: top center;
-  animation: sway 4.5s ease-in-out infinite alternate;
-  animation-delay: calc(var(--i) * -0.37s);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+.papel-picado .humo {
+  position: absolute; left: 4px; top: -10px; width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(140, 120, 100, .45);
+  animation: humo 1.6s ease-out infinite;
 }
-.papel-picado span:nth-child(3n + 1) { --flag: #006847; }
-.papel-picado span:nth-child(3n + 2) { --flag: #f4efe4; }
-.papel-picado span:nth-child(3n + 3) { --flag: #c8102e; }
-@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+@keyframes viaje { from { transform: translateX(calc(100vw + 20px)); } to { transform: translateX(-80px); } }
+@keyframes humo { from { transform: translate(0, 0) scale(.6); opacity: .8; } to { transform: translate(14px, -10px) scale(1.8); opacity: 0; } }
 
 .tema-revolucion .hero { padding-top: 58px; }
 .tema-revolucion .hero h1 em { color: var(--accent); }
-.tema-revolucion .brand-mark { background: #006847; }
-.tema-revolucion .brand-mark svg { fill: #f4efe4; stroke: #c8102e; }
+.tema-revolucion .brand-mark { background: #5e4b3a; }
+.tema-revolucion .brand-mark svg { fill: #f2e8d5; stroke: #9e3b22; }
+/* Cinta tipo cartel de época: fondo kraft con orillas punteadas. */
 .tema-revolucion .marquee {
-  background: linear-gradient(90deg, #006847 0 33.3%, #f4efe4 33.3% 66.6%, #c8102e 66.6%);
-  color: #2b1d14;
+  background: #2a1f16;
+  color: #f2e8d5;
+  border-block: 2px dashed rgba(192, 138, 46, .7);
 }
-.tema-revolucion .marquee-track span { padding: 2px 10px; background: rgba(255, 250, 240, .88); border-radius: 8px; }
-.tema-revolucion .dot-live { background: #006847; }
-.tema-revolucion .s-nuevo { background: #006847; }
+.tema-revolucion .marquee-track span { letter-spacing: .06em; text-transform: uppercase; }
+.tema-revolucion .dot-live { background: #5f6b3a; }
+.tema-revolucion .s-nuevo { background: #5f6b3a; }
+/* Fotos con un toque cálido de foto antigua (muy leve, para no ensuciar el producto). */
+.tema-revolucion .card-tilt img { filter: sepia(.12) contrast(1.02); }
 .tema-revolucion .ph-art {
   background:
-    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .35), transparent 55%),
-    linear-gradient(150deg, #006847, #2b1d14 70%, #c8102e 140%);
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, .3), transparent 55%),
+    linear-gradient(150deg, #8a6a45, #2a1f16 70%, #9e3b22 140%);
 }
 
 @media (max-width: 639px) {
-  .papel-picado span { width: 34px; height: 32px; }
+  .papel-picado .tren { font-size: 20px; }
   .tema-revolucion .hero { padding-top: 48px; }
 }
 @media (min-width: 900px) {
   .tema-revolucion .hero { padding-top: 84px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .papel-picado span { animation: none; }
+  .papel-picado .tren { animation: none; transform: translateX(16px); }
+  .papel-picado .humo { animation: none; opacity: 0; }
 }
 
 /* ---------- "Mi colonia no está" ---------- */

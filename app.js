@@ -13,8 +13,8 @@
       marquee: ['Antojos de miedo', 'Entrega de noche', 'Transferencia o efectivo'], marks: ['🎃', '👻', '🦇'],
     },
     revolucion: {
-      emoji: '🇲🇽', eyebrow: '🇲🇽 Edición Revolución',
-      marquee: ['¡Viva México!', 'Edición Revolución Mexicana', 'Entrega a domicilio'], marks: ['🇲🇽', '✦', '🌵'],
+      emoji: '🚂', eyebrow: '🚂 Edición Revolución',
+      marquee: ['Antojos que hacen revolución', 'Edición 20 de noviembre', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🚂', '✦'],
     },
   };
   const OTRA = '__otra'; // valor de "Mi colonia no está en la lista"
@@ -188,7 +188,8 @@
     $('.spooky').hidden = s.temporada !== 'halloween';
     $('.papel-picado').hidden = s.temporada !== 'revolucion';
     if (s.temporada === 'revolucion' && !$('.papel-picado').children.length) {
-      $('.papel-picado').innerHTML = Array.from({ length: 44 }, (_, i) => `<span style="--i:${i}"></span>`).join('');
+      // Vía de tren con una locomotora que cruza la pantalla (el contenedor conserva su nombre viejo).
+      $('.papel-picado').innerHTML = '<span class="tren">🚂<i class="humo"></i></span>';
     }
     document.title = `${s.storeName} · postres y artículos a domicilio${tema ? ` ${tema.emoji}` : ''}`;
     $$('[data-store-name]').forEach((el) => { el.textContent = s.storeName; });

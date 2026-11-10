@@ -24,7 +24,7 @@
     "pedidoMinimo": 0,
     "puntoEntrega": "",
     "temporada": "",
-    "temporadaProgramada": { "tema": "revolucion", "desde": "2026-11-12", "hasta": "2026-11-22" },
+    "temporadaProgramada": { "tema": "revolucion", "desde": "2026-11-13", "hasta": "2026-11-21" },
     "entregaAnticipada": true,
     "extraAnticipada": 50,
     "fueraZona": false,
