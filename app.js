@@ -17,6 +17,34 @@
       marquee: ['Antojos que hacen revolución', 'Edición 20 de noviembre', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🚂', '✦'],
     },
   };
+  // Siluetas dibujadas a mano (sin fotos ni personajes reales): pies en y=40, centro en x=0.
+  function trenSVG() {
+    const adelita = `<g id="pb-adelita"><ellipse cx="0" cy="11" rx="9" ry="2.2"/><path d="M-4 11Q0 3 4 11Z"/>
+      <circle cx="0" cy="14.6" r="3.3"/><path d="M2.6 15.5q3 4.5.6 9.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M-4 18h8l1.2 9h-10.4z"/><path d="M-5.2 26 -10.5 40h21L5.2 26z"/>
+      <path d="M-4 18.5 5 27M4 18.5-5 27" class="hueco-l"/><path d="M-4 19-9.5 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>`;
+    const revo = `<g id="pb-revo"><ellipse cx="0" cy="11" rx="12.5" ry="2.6"/><path d="M-4.6 11Q0 .5 4.6 11Z"/>
+      <circle cx="0" cy="14.6" r="3.3"/><path d="M-4.6 18h9.2l-.5 11h-8.2z"/>
+      <path d="M-4.2 18.5 4.2 29M4.2 18.5-4.2 29" class="hueco-l"/>
+      <rect x="-4.1" y="28.5" width="3.3" height="11.5"/><rect x=".8" y="28.5" width="3.3" height="11.5"/>
+      <path d="M-7 31 8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>`;
+    const rueda = (cx, cy, r) => `<circle cx="${cx}" cy="${cy}" r="${r}"/><circle cx="${cx}" cy="${cy}" r="${r * 0.35}" class="hueco"/>`;
+    const vagon = (x, gente) => `<g transform="translate(${x} 0)">
+      <rect x="-8" y="72" width="8" height="3"/><rect x="0" y="41" width="88" height="37" rx="2"/>
+      <rect x="-2" y="37.5" width="92" height="4.5" rx="1.5"/><rect x="30" y="47" width="28" height="26" class="hueco" opacity=".3"/>
+      <rect x="2" y="78" width="84" height="4"/>${rueda(18, 86, 8)}${rueda(70, 86, 8)}
+      ${gente.map(([quien, fx]) => `<use href="#pb-${quien}" x="${fx}" y="-2.5"/>`).join('')}</g>`;
+    return `<svg class="tren" viewBox="0 0 512 100" aria-hidden="true"><defs>${adelita}${revo}</defs>
+      <g class="humo"><circle cx="31" cy="20" r="5"/><circle cx="31" cy="20" r="5"/><circle cx="31" cy="20" r="5"/></g>
+      <rect x="16" y="48" width="64" height="26" rx="6"/><path d="M26 48 22 28h18l-4 20z"/><rect x="20" y="24" width="22" height="5" rx="1.5"/>
+      <path d="M50 48a8 8 0 0 1 16 0z"/><rect x="10" y="52" width="7" height="8" rx="1"/>
+      <rect x="78" y="32" width="34" height="42" rx="2"/><rect x="74" y="28" width="42" height="6" rx="1.5"/>
+      <rect x="86" y="39" width="16" height="13" rx="1.5" class="hueco"/><path d="M16 68 2 86h16z"/>
+      <rect x="8" y="74" width="106" height="6" rx="1"/>${rueda(32, 87, 7)}${rueda(52, 87, 7)}${rueda(96, 84, 10)}
+      <rect x="30" y="85.5" width="68" height="3" rx="1.5"/>
+      ${vagon(124, [['adelita', 22], ['revo', 62]])}${vagon(222, [['revo', 24], ['adelita', 60]])}
+      ${vagon(320, [['adelita', 26], ['adelita', 58]])}${vagon(418, [['revo', 30], ['adelita', 64]])}</svg>`;
+  }
   const OTRA = '__otra'; // valor de "Mi colonia no está en la lista"
   // Modo estático (GitHub Pages): sin servidor. El menú sale de catalogo.json, las fechas
   // se calculan aquí y el pedido llega por correo (settings.correoPedidos, vía FormSubmit).
@@ -188,8 +216,9 @@
     $('.spooky').hidden = s.temporada !== 'halloween';
     $('.papel-picado').hidden = s.temporada !== 'revolucion';
     if (s.temporada === 'revolucion' && !$('.papel-picado').children.length) {
-      // Vía de tren con una locomotora que cruza la pantalla (el contenedor conserva su nombre viejo).
-      $('.papel-picado').innerHTML = '<span class="tren">🚂<i class="humo"></i></span>';
+      // Tren revolucionario con adelitas y revolucionarios en los techos, cruzando un paisaje
+      // de cerros y magueyes (el contenedor conserva su nombre viejo, .papel-picado).
+      $('.papel-picado').innerHTML = trenSVG();
     }
     document.title = `${s.storeName} · postres y artículos a domicilio${tema ? ` ${tema.emoji}` : ''}`;
     $$('[data-store-name]').forEach((el) => { el.textContent = s.storeName; });
