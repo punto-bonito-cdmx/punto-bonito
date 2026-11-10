@@ -20,21 +20,21 @@
   // Siluetas dibujadas a mano (sin fotos ni personajes reales): pies en y=40, centro en x=0.
   function trenSVG() {
     const adelita = `<g id="pb-adelita"><ellipse cx="0" cy="11" rx="9" ry="2.2"/><path d="M-4 11Q0 3 4 11Z"/>
-      <circle cx="0" cy="14.6" r="3.3"/><path d="M2.6 15.5q3 4.5.6 9.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <circle cx="0" cy="14.6" r="3.3"/><path d="M2.6 15.5q3 4.5.6 9.5" fill="none" class="linea" stroke-width="1.6"/>
       <path d="M-4 18h8l1.2 9h-10.4z"/><path d="M-5.2 26 -10.5 40h21L5.2 26z"/>
-      <path d="M-4 18.5 5 27M4 18.5-5 27" class="hueco-l"/><path d="M-4 19-9.5 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>`;
+      <path d="M-4 18.5 5 27M4 18.5-5 27" class="hueco-l"/><path d="M-4 19-9.5 13" class="linea" stroke-width="2" stroke-linecap="round"/></g>`;
     const revo = `<g id="pb-revo"><ellipse cx="0" cy="11" rx="12.5" ry="2.6"/><path d="M-4.6 11Q0 .5 4.6 11Z"/>
       <circle cx="0" cy="14.6" r="3.3"/><path d="M-4.6 18h9.2l-.5 11h-8.2z"/>
       <path d="M-4.2 18.5 4.2 29M4.2 18.5-4.2 29" class="hueco-l"/>
       <rect x="-4.1" y="28.5" width="3.3" height="11.5"/><rect x=".8" y="28.5" width="3.3" height="11.5"/>
-      <path d="M-7 31 8 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>`;
+      <path d="M-7 31 8 6" class="linea" stroke-width="1.7" stroke-linecap="round"/></g>`;
     const rueda = (cx, cy, r) => `<circle cx="${cx}" cy="${cy}" r="${r}"/><circle cx="${cx}" cy="${cy}" r="${r * 0.35}" class="hueco"/>`;
     const vagon = (x, gente) => `<g transform="translate(${x} 0)">
-      <rect x="-8" y="72" width="8" height="3"/><rect x="0" y="41" width="88" height="37" rx="2"/>
-      <rect x="-2" y="37.5" width="92" height="4.5" rx="1.5"/><rect x="30" y="47" width="28" height="26" class="hueco" opacity=".3"/>
+      <rect x="-8" y="72" width="8" height="3"/><g class="caja"><rect x="0" y="41" width="88" height="37" rx="2"/>
+      <rect x="-2" y="37.5" width="92" height="4.5" rx="1.5"/></g><rect x="30" y="47" width="28" height="26" class="hueco" opacity=".3"/>
       <rect x="2" y="78" width="84" height="4"/>${rueda(18, 86, 8)}${rueda(70, 86, 8)}
-      ${gente.map(([quien, fx]) => `<use href="#pb-${quien}" x="${fx}" y="-2.5"/>`).join('')}</g>`;
-    return `<svg class="tren" viewBox="0 0 512 100" aria-hidden="true"><defs>${adelita}${revo}</defs>
+      ${gente.map(([quien, fx]) => `<g class="gente" transform="translate(${fx} -2.5) translate(0 40) scale(1.4) translate(0 -40)"><use href="#pb-${quien}"/></g>`).join('')}</g>`;
+    return `<svg class="tren" viewBox="0 -18 512 118" aria-hidden="true"><defs>${adelita}${revo}</defs>
       <g class="humo"><circle cx="31" cy="20" r="5"/><circle cx="31" cy="20" r="5"/><circle cx="31" cy="20" r="5"/></g>
       <rect x="16" y="48" width="64" height="26" rx="6"/><path d="M26 48 22 28h18l-4 20z"/><rect x="20" y="24" width="22" height="5" rx="1.5"/>
       <path d="M50 48a8 8 0 0 1 16 0z"/><rect x="10" y="52" width="7" height="8" rx="1"/>
