@@ -385,7 +385,7 @@
   function renderMarquee() {
     const names = state.items.map((i) => i.title);
     const tema = TEMAS[state.settings.temporada];
-    const extra = tema ? tema.marquee : ['Entrega a domicilio', 'Transferencia o efectivo', 'Pide por Instagram'];
+    const extra = tema ? tema.marquee : ['Entrega a domicilio', 'Transferencia o efectivo', 'Escríbenos por Messenger'];
     const marks = tema ? tema.marks : ['✦'];
     const run = [...names, ...extra].map((w, i) => `${esc(w)} <i>${marks[i % marks.length]}</i>`).join(' ');
     $('.marquee-track').innerHTML = `<span>${run}</span><span>${run}</span>`;
