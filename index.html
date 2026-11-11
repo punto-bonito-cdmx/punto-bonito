@@ -16,11 +16,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="app.css?v=202611102021">
-  <link rel="stylesheet" href="postres.css?v=202611102021">
-  <link rel="stylesheet" href="halloween.css?v=202611102021">
-  <link rel="stylesheet" href="revolucion.css?v=202611102021">
-  <script src="theme.js?v=202611102021"></script>
+  <link rel="stylesheet" href="app.css?v=202611110544">
+  <link rel="stylesheet" href="postres.css?v=202611110544">
+  <link rel="stylesheet" href="halloween.css?v=202611110544">
+  <link rel="stylesheet" href="revolucion.css?v=202611110544">
+  <script src="theme.js?v=202611110544"></script>
 </head>
 <body>
   <svg width="0" height="0" class="sprite" aria-hidden="true">
@@ -94,6 +94,7 @@
             <a class="btn btn-ghost" id="msg-cta" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-msg"/></svg>Escríbenos</a>
             <a class="btn btn-ghost" id="ig-cta" href="#" target="_blank" rel="noopener" hidden><svg><use href="#i-insta"/></svg>Pedir por Instagram</a>
           </div>
+          <a class="hero-faq" href="#/como-pedir/preguntas"><svg><use href="#i-info"/></svg>¿Dudas? Mira las preguntas frecuentes</a>
         </div>
         <div class="hero-show" id="hero-show">
           <div class="carousel" id="carousel" aria-roledescription="carrusel" aria-label="Destacados"></div>
@@ -160,9 +161,13 @@
           <p class="clause" id="how-zona-clause" hidden></p>
           <div class="how-btns" id="how-zona-btns"></div>
         </section>
+        <section class="how-card faq" id="how-faq">
+          <h3><svg><use href="#i-info"/></svg>Preguntas frecuentes</h3>
+          <div class="faq-list" id="faq-list"></div>
+        </section>
         <section class="how-card" id="how-contact">
           <h3><svg><use href="#i-mail"/></svg>Escríbenos</h3>
-          <p id="contact-intro">¿Dudas, un pedido especial o quieres saber si llegamos a tu colonia? Déjanos tu mensaje y te respondemos.</p>
+          <p id="contact-intro">¿Tu duda no está arriba o quieres un pedido especial? Escríbenos por Messenger o, si no lo tienes, déjanos tu pregunta aquí y te respondemos por teléfono o correo.</p>
           <div class="how-btns" id="contact-btns"></div>
           <form class="contact-form" id="contact-form" novalidate hidden>
             <label class="ap-field"><span>Tu nombre</span><input name="nombre" autocomplete="name" maxlength="60" required></label>
@@ -342,6 +347,6 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js?v=202611102021" defer></script>
+  <script src="app.js?v=202611110544" defer></script>
 </body>
 </html>

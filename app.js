@@ -1242,6 +1242,51 @@
     if (cf) cf.hidden = !s.correoPedidos;
     const card = $('#how-contact');
     if (card) card.hidden = !cbtns.length && !s.correoPedidos;
+    renderFaq();
+  }
+
+  // Preguntas frecuentes: salen de settings para no desfasarse del catálogo.
+  // Mismas respuestas que la base de Messenger (vault: "Punto Bonito — Base de respuestas").
+  function renderFaq() {
+    const s = state.settings;
+    const list = $('#faq-list');
+    if (!list) return;
+    const dias = diasText();
+    const horas = (s.horarios || []).join(' o ');
+    const colonias = s.colonias || [];
+    const ant = s.anticipacionDias || 0;
+    const faq = [
+      ['¿Qué tienen hoy?',
+        'Todo lo disponible está en el menú con su precio. Si algo dice “Agotado”, se nos acabó: vuelve pronto 💛'],
+      ['¿Entregan en mi colonia?',
+        colonias.length
+          ? `Entregamos en ${colonias.length > 1 ? `${colonias.slice(0, -1).join(', ')} y ${colonias[colonias.length - 1]}` : colonias[0]}. Por ahora no llegamos a otras colonias; te avisamos en cuanto ampliemos la zona.`
+          : s.zona || ''],
+      ['¿Qué días y a qué hora entregan?',
+        dias ? `${dias[0].toUpperCase()}${dias.slice(1)}${horas ? `, de ${horas}` : ''}.` : ''],
+      ['¿Con cuánta anticipación pido?',
+        ant ? `Con ${ant === 1 ? 'un día' : `${ant} días`} de anticipación.` : 'Puedes pedir para el siguiente día de entrega.'],
+      ['¿Puedo recibirlo otro día o más temprano?',
+        s.entregaAnticipada
+          ? `Sí, como entrega anticipada, con un cargo extra de ${fmt(s.extraAnticipada || 0)} por pedido. Te confirmamos si se puede antes de aceptarlo.`
+          : ''],
+      ['¿Cuánto cuesta el envío?',
+        !s.costoEnvio
+          ? `Es gratis dentro de nuestras colonias${s.pedidoMinimo ? `, con pedido mínimo de ${fmt(s.pedidoMinimo)}` : ' y no hay pedido mínimo'}.`
+          : `${fmt(s.costoEnvio)}${s.envioGratisDesde ? `; gratis en pedidos desde ${fmt(s.envioGratisDesde)}` : ''}.`],
+      ['¿Cómo pago?',
+        s.transferencia
+          ? 'En efectivo al recibir o por transferencia. Si pagas en efectivo, dinos con cuánto pagas para llevarte cambio; los datos para transferir te los damos al confirmar tu pedido.'
+          : 'En efectivo al recibir. Dinos con cuánto pagas para llevarte cambio.'],
+      ['¿Hacen pedidos grandes o para fiestas?',
+        '¡Claro que lo vemos! Cuéntanos para cuántas personas y para qué fecha, y te confirmamos opciones y precio.'],
+      ['¿Cómo se conservan?',
+        'Las rebanadas de pastel y cheesecake van en refrigeración. Los muffins, donas y chocolatines se disfrutan mejor el mismo día o al siguiente.'],
+      ['¿Tienen tienda física?',
+        'No, somos tienda a domicilio: pides aquí o por Messenger y te lo llevamos a tu puerta.'],
+    ].filter(([, a]) => a);
+    list.innerHTML = faq.map(([q, a]) => `
+      <details class="faq-item"><summary>${esc(q)}<svg><use href="#i-right"/></svg></summary><p>${esc(a)}</p></details>`).join('');
   }
 
   const contactForm = $('#contact-form');
@@ -1328,7 +1373,16 @@
       return;
     }
     hideSheet();
-    if (view === 'como-pedir') { showView('how'); return; }
+    if (view === 'como-pedir') {
+      showView('how');
+      if (id === 'preguntas') {
+        const faq = $('#how-faq');
+        const first = $('#faq-list details');
+        if (first) first.open = true;
+        requestAnimationFrame(() => faq?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }));
+      }
+      return;
+    }
     const sec = view === 'articulos' ? 'articulos' : 'postres';
     const fromHow = state.view === 'how';
     const changed = sec !== state.section;
