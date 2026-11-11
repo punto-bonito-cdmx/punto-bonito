@@ -1231,17 +1231,16 @@
     if (s.instagram) btns.push(`<a class="btn btn-ghost" href="${esc(igUrl(s.instagram))}" target="_blank" rel="noopener"><svg><use href="#i-insta"/></svg>Instagram</a>`);
     $('#how-zona-btns').innerHTML = btns.join('');
 
-    // Escríbenos: Messenger / Instagram / formulario que llega al correo. Sin número personal.
+    // Escríbenos: solo Messenger / Facebook / Instagram. Sin número personal ni formulario por correo
+    // (se quitó el 2026-11-11; los pedidos sí siguen llegando al correo por FormSubmit).
     const cbtns = [];
     if (msgUrl(s)) cbtns.push(`<a class="btn btn-primary" href="${esc(msgUrl(s))}" target="_blank" rel="noopener"><svg><use href="#i-msg"/></svg>Messenger</a>`);
     if (s.facebook) cbtns.push(`<a class="btn btn-ghost" href="${esc(fbUrl(s.facebook))}" target="_blank" rel="noopener"><svg><use href="#i-fb"/></svg>Facebook</a>`);
     if (s.instagram) cbtns.push(`<a class="btn btn-ghost" href="${esc(igUrl(s.instagram))}" target="_blank" rel="noopener"><svg><use href="#i-insta"/></svg>@${esc(s.instagram)}</a>`);
     const cb = $('#contact-btns');
     if (cb) cb.innerHTML = cbtns.join('');
-    const cf = $('#contact-form');
-    if (cf) cf.hidden = !s.correoPedidos;
     const card = $('#how-contact');
-    if (card) card.hidden = !cbtns.length && !s.correoPedidos;
+    if (card) card.hidden = !cbtns.length;
     renderFaq();
   }
 
@@ -1288,53 +1287,6 @@
     list.innerHTML = faq.map(([q, a]) => `
       <details class="faq-item"><summary>${esc(q)}<svg><use href="#i-right"/></svg></summary><p>${esc(a)}</p></details>`).join('');
   }
-
-  const contactForm = $('#contact-form');
-  contactForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const f = contactForm.elements;
-    const err = $('#contact-error');
-    const nombre = f.nombre.value.trim();
-    const contacto = f.contacto.value.trim();
-    const mensaje = f.mensaje.value.trim();
-    const tel = contacto.replace(/\D/g, '');
-    const esCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto);
-    let problema = '';
-    if (!nombre) problema = 'Escribe tu nombre.';
-    else if (!esCorreo && tel.length !== 10) problema = 'Déjanos un correo o un teléfono de 10 dígitos para responderte.';
-    else if (mensaje.length < 3) problema = 'Escribe tu mensaje.';
-    err.hidden = !problema;
-    err.textContent = problema;
-    if (problema) return;
-    const btn = $('button[type="submit"]', contactForm);
-    btn.disabled = true;
-    try {
-      const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(state.settings.correoPedidos)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: `Mensaje desde la página · ${nombre}`,
-          _template: 'box',
-          _captcha: 'false',
-          _honey: f.website.value,
-          ...(esCorreo ? { _replyto: contacto } : {}),
-          Nombre: nombre,
-          Contacto: esCorreo ? contacto : tel,
-          Mensaje: mensaje,
-        }),
-      });
-      const out = await res.json().catch(() => ({}));
-      if (!res.ok || String(out.success) !== 'true') throw new Error(out.message || `Error ${res.status}`);
-      contactForm.reset();
-      contactForm.hidden = true;
-      $('#contact-ok').hidden = false;
-    } catch {
-      err.hidden = false;
-      err.textContent = 'No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.';
-    } finally {
-      btn.disabled = false;
-    }
-  });
 
   function renderFooter() {
     const s = state.settings;
