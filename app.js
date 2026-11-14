@@ -446,7 +446,9 @@
     return Math.max(0, Math.min(MAX_QTY, Math.floor(libres / n)));
   }
   const maxFor = (it) => maxForKey(it, false);
-  const stockTag = (it) => (Number.isInteger(it.stock) && it.status === 'disponible' && it.stock <= 10
+  // Las existencias solo se muestran cuando quedan pocas (desde 2026-11-14: 3 o menos).
+  const POCAS = 3;
+  const stockTag = (it) => (Number.isInteger(it.stock) && it.status === 'disponible' && it.stock <= POCAS
     ? `<span class="stock-tag">${it.stock === 1 ? '¡Queda 1!' : `Quedan ${it.stock}`}</span>` : '');
 
   // ------------------------------------------------------------ menú
@@ -568,7 +570,7 @@
     if (!it) return;
     const q = clamp(Math.round(qty), 0, maxForKey(it, pack));
     const before = state.cart[key] || 0;
-    if (qty > q && q === before) toast(it.stock ? `Solo quedan ${it.stock} piezas` : 'Se agotó', 'i-info');
+    if (qty > q && q === before) toast(!it.stock ? 'Se agotó' : it.stock <= POCAS ? `Solo quedan ${it.stock} piezas` : 'Ya no hay más piezas por ahora', 'i-info');
     if (q) state.cart[key] = q; else delete state.cart[key];
     store('postres-pedido', state.cart);
     if (announce && q > before) toast(`${it.title}${hasPromo(it) ? ` · ${optLabel(it, pack)}` : ''} en tu pedido`, 'i-bag');
@@ -727,7 +729,7 @@
     $('#d-price').textContent = priceLabel(it);
     $('#d-price').classList.toggle('tbd', !it.price);
     $('#d-unit').textContent = [it.unit ? `por ${it.unit}` : '', promoText(it),
-      Number.isInteger(it.stock) && it.status === 'disponible' ? `${it.stock} disponibles` : ''].filter(Boolean).join(' · ');
+      Number.isInteger(it.stock) && it.status === 'disponible' && it.stock <= POCAS ? `${it.stock} disponibles` : ''].filter(Boolean).join(' · ');
     const st = $('#d-status');
     st.className = `status-pill st-${it.status === 'disponible' ? 'disponible' : 'vendido'}`;
     st.textContent = it.status === 'disponible' ? 'Disponible' : 'Agotado';

@@ -16,15 +16,25 @@
       "El Edén",
       "Paraje Zacatepec"
     ],
-    "diasEntrega": [5, 6, 0],
-    "horarios": ["8:00 pm a 11:00 pm"],
+    "diasEntrega": [
+      5,
+      6,
+      0
+    ],
+    "horarios": [
+      "8:00 pm a 11:00 pm"
+    ],
     "anticipacionDias": 1,
     "costoEnvio": 0,
     "envioGratisDesde": 0,
     "pedidoMinimo": 0,
     "puntoEntrega": "",
     "temporada": "",
-    "temporadaProgramada": { "tema": "revolucion", "desde": "2026-11-13", "hasta": "2026-11-21" },
+    "temporadaProgramada": {
+      "tema": "revolucion",
+      "desde": "2026-11-13",
+      "hasta": "2026-11-21"
+    },
     "entregaAnticipada": true,
     "extraAnticipada": 50,
     "fueraZona": false,
@@ -47,53 +57,62 @@
       "stock": 0,
       "status": "agotado",
       "featured": true,
-      "images": ["fotos/muf-cho-1.webp", "fotos/muf-cho-2.webp"],
+      "images": [
+        "fotos/muf-cho-1.webp",
+        "fotos/muf-cho-2.webp"
+      ],
       "createdAt": "2026-11-08T20:03:32.721Z"
     },
     {
-      "id": "2072a8a7d8",
-      "sku": "MUF-BLU",
+      "id": "f95a0e3f5b",
+      "sku": "PAS-TUX",
       "seccion": "postres",
-      "title": "Muffin de blueberry",
-      "price": 30,
-      "unit": "pieza",
-      "category": "Muffins",
-      "description": "Muffin grande de vainilla con blueberries jugosos en cada mordida.",
-      "stock": 1,
-      "status": "disponible",
-      "featured": false,
-      "images": ["fotos/muf-blu-1.webp", "fotos/muf-blu-2.webp"],
-      "createdAt": "2026-11-08T20:04:32.721Z"
-    },
-    {
-      "id": "86546fa6d8",
-      "sku": "PAS-DUR",
-      "seccion": "postres",
-      "title": "Rebanada de pastel de durazno con crema",
-      "price": 45,
+      "title": "Rebanada de pastel Tuxedo de chocolate gourmet",
+      "price": 55,
       "unit": "rebanada",
       "category": "Pasteles",
-      "description": "Rebanada de pastel suave con duraznos y crema. Se mantiene en refrigeración.",
-      "stock": 0,
-      "status": "agotado",
+      "description": "Capas de pan de chocolate, mousse de chocolate y crema de chocolate blanco, cubierta con ganache. Se mantiene en refrigeración.",
+      "stock": 10,
+      "status": "disponible",
       "featured": true,
-      "images": ["fotos/pas-dur-1.webp"],
-      "createdAt": "2026-11-08T20:05:32.721Z"
+      "images": [
+        "fotos/pas-tux-1.webp"
+      ],
+      "createdAt": "2026-11-14T06:07:24.567Z"
     },
     {
-      "id": "b0131b3206",
-      "sku": "CHE-FRA",
+      "id": "1e2ed53a2b",
+      "sku": "CHO-FLA",
       "seccion": "postres",
-      "title": "Rebanada de cheesecake de frambuesa",
+      "title": "Rebanada de chocoflan",
       "price": 45,
       "unit": "rebanada",
       "category": "Pasteles",
-      "description": "Rebanada de cheesecake cremoso cubierto con mermelada de frambuesa y orilla de crema batida. Se mantiene en refrigeración.",
-      "stock": 2,
+      "description": "Flan cremoso sobre pastel de chocolate, bañado en caramelo. Se mantiene en refrigeración.",
+      "stock": 8,
       "status": "disponible",
       "featured": false,
-      "images": ["fotos/che-zar-1.webp", "fotos/che-zar-2.webp"],
-      "createdAt": "2026-11-08T20:06:32.721Z"
+      "images": [
+        "fotos/cho-fla-1.webp"
+      ],
+      "createdAt": "2026-11-14T06:08:24.567Z"
+    },
+    {
+      "id": "000b96e328",
+      "sku": "STR-MAN",
+      "seccion": "postres",
+      "title": "Mini strudel de manzana",
+      "price": 12,
+      "unit": "pieza",
+      "category": "Bocaditos",
+      "description": "Hojaldre crujiente relleno de manzana con canela y cubierto de azúcar.",
+      "stock": 12,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/str-man-1.webp"
+      ],
+      "createdAt": "2026-11-14T06:09:24.567Z"
     },
     {
       "id": "2ee6d0f51d",
@@ -101,31 +120,22 @@
       "seccion": "postres",
       "title": "Mini donas con azúcar",
       "price": 3,
-      "promo": { "cantidad": 5, "precio": 10 },
+      "promo": {
+        "cantidad": 5,
+        "precio": 10
+      },
       "unit": "pieza",
       "category": "Bocaditos",
       "description": "Mini donas espolvoreadas con azúcar. Perfectas para compartir o para el lunch. Llévate 5 por $10.",
       "stock": 60,
       "status": "disponible",
       "featured": false,
-      "images": ["fotos/don-mini-1.webp", "fotos/don-mini-2.webp", "fotos/don-mini-3.webp"],
+      "images": [
+        "fotos/don-mini-1.webp",
+        "fotos/don-mini-2.webp",
+        "fotos/don-mini-3.webp"
+      ],
       "createdAt": "2026-11-08T20:07:32.721Z"
-    },
-    {
-      "id": "3b843abef8",
-      "sku": "CHOC-MINI",
-      "seccion": "postres",
-      "title": "Mini chocolatines",
-      "price": 8,
-      "promo": { "cantidad": 2, "precio": 15 },
-      "unit": "pieza",
-      "category": "Bocaditos",
-      "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por $15.",
-      "stock": 0,
-      "status": "agotado",
-      "featured": false,
-      "images": ["fotos/choc-mini-1.webp", "fotos/choc-mini-2.webp"],
-      "createdAt": "2026-11-08T20:08:32.721Z"
     }
   ]
 }
