@@ -54,8 +54,8 @@
       "unit": "pieza",
       "category": "Muffins",
       "description": "Muffin grande de chocolate, esponjoso y con mucho sabor a cacao. Ideal con café o leche.",
-      "stock": 0,
-      "status": "agotado",
+      "stock": null,
+      "status": "disponible",
       "featured": true,
       "images": [
         "fotos/muf-cho-1.webp",
