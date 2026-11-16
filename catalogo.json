@@ -54,7 +54,7 @@
       "unit": "pieza",
       "category": "Muffins",
       "description": "Muffin grande de chocolate, esponjoso y con mucho sabor a cacao. Ideal con café o leche.",
-      "stock": null,
+      "stock": 6,
       "status": "disponible",
       "featured": true,
       "images": [
@@ -72,8 +72,8 @@
       "unit": "rebanada",
       "category": "Pasteles",
       "description": "Capas de pan de chocolate, mousse de chocolate y crema de chocolate blanco, cubierta con ganache. Se mantiene en refrigeración.",
-      "stock": 10,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": true,
       "images": [
         "fotos/pas-tux-1.webp"
@@ -106,7 +106,7 @@
       "unit": "pieza",
       "category": "Bocaditos",
       "description": "Hojaldre crujiente relleno de manzana con canela y cubierto de azúcar.",
-      "stock": 12,
+      "stock": 6,
       "status": "disponible",
       "featured": false,
       "images": [
