@@ -124,6 +124,21 @@
         "fotos/don-mini-3.webp"
       ],
       "createdAt": "2026-11-08T20:07:32.721Z"
+    },
+    {
+      "id": "e9a013f681",
+      "sku": "PRE-BOL",
+      "seccion": "postres",
+      "title": "Pretzels en bolsita",
+      "price": 20,
+      "unit": "bolsita",
+      "category": "Bocaditos",
+      "description": "Bolsita de pretzels crujientes, perfectos para botanear o acompañar tu café.",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [],
+      "createdAt": "2026-11-21T00:05:48.811Z"
     }
   ]
 }
