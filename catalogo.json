@@ -139,6 +139,386 @@
       "featured": false,
       "images": [],
       "createdAt": "2026-11-21T00:05:48.811Z"
+    },
+    {
+      "id": "37db199aef",
+      "sku": "ART-FAL-ROS",
+      "seccion": "articulos",
+      "title": "Falda short rosa plisada",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Falda con short integrado, tablones al frente y cintura elástica. Color rosa. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-fal-ros-1.webp",
+        "fotos/art-fal-ros-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.341Z"
+    },
+    {
+      "id": "82ccc2ab35",
+      "sku": "ART-CAM-OLI",
+      "seccion": "articulos",
+      "title": "Camisa verde olivo de manga corta",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Camisa ligera con cuello y botones al frente, color verde olivo. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-cam-oli-1.webp",
+        "fotos/art-cam-oli-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.342Z"
+    },
+    {
+      "id": "a2d6113d1e",
+      "sku": "ART-JEA-AZU",
+      "seccion": "articulos",
+      "title": "Jeans mom azul claro",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Pantalón de mezclilla tiro alto, corte mom, deslavado claro. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-jea-azu-1.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.343Z"
+    },
+    {
+      "id": "fe2d263a5e",
+      "sku": "ART-VES-TOM",
+      "seccion": "articulos",
+      "title": "Vestido playero negro Tommy Hilfiger",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido tipo playera negro con estampado Hilfiger New York City al frente. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-tom-1.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.344Z"
+    },
+    {
+      "id": "14790a3dc6",
+      "sku": "ART-PLA-TOM",
+      "seccion": "articulos",
+      "title": "Playera verde olivo Tommy Hilfiger",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Playera con cinta del logo en los hombros y orillas azul marino. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-pla-tom-1.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.345Z"
+    },
+    {
+      "id": "86103d0709",
+      "sku": "ART-TOP-VER",
+      "seccion": "articulos",
+      "title": "Top verde neón acanalado H&M",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Top de cuello alto en tejido acanalado, color verde neón. Talla XL. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-top-ver-1.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.346Z"
+    },
+    {
+      "id": "5ae046738b",
+      "sku": "ART-VES-ROJ",
+      "seccion": "articulos",
+      "title": "Vestido rojo de manga globo",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido con mangas abullonadas y falda de olanes, color rojo. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-roj-1.webp",
+        "fotos/art-ves-roj-2.webp",
+        "fotos/art-ves-roj-3.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.347Z"
+    },
+    {
+      "id": "c728c3d740",
+      "sku": "ART-CHA-MOS",
+      "seccion": "articulos",
+      "title": "Chamarra mostaza de puntos Lefties",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Chamarra ligera con capucha y cierre, color mostaza con puntos azul marino. Talla M. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-cha-mos-1.webp",
+        "fotos/art-cha-mos-2.webp",
+        "fotos/art-cha-mos-3.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.348Z"
+    },
+    {
+      "id": "b365662892",
+      "sku": "ART-VES-NEG",
+      "seccion": "articulos",
+      "title": "Vestido negro con cuello de olanes",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido negro de manga larga con cuello y puños de olán blanco. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-neg-1.webp",
+        "fotos/art-ves-neg-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.349Z"
+    },
+    {
+      "id": "4959493057",
+      "sku": "ART-VES-FLO",
+      "seccion": "articulos",
+      "title": "Vestido azul marino floral de tirantes",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido de tirantes con botones al frente y estampado de flores pequeñas. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-flo-1.webp",
+        "fotos/art-ves-flo-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.350Z"
+    },
+    {
+      "id": "6c3e7af3f2",
+      "sku": "ART-VES-RSA",
+      "seccion": "articulos",
+      "title": "Vestido rosa Forever 21",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido de manga corta con nudo al frente y falda con vuelo, color rosa palo. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-rsa-1.webp",
+        "fotos/art-ves-rsa-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.351Z"
+    },
+    {
+      "id": "e1e3ae0433",
+      "sku": "ART-VES-MAR",
+      "seccion": "articulos",
+      "title": "Vestido azul marino de manga corta",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Vestido sencillo con falda de vuelo, color azul marino. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-ves-mar-1.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.352Z"
+    },
+    {
+      "id": "655780d0bf",
+      "sku": "ART-BLU-PLI",
+      "seccion": "articulos",
+      "title": "Blusa negra plisada de tirantes",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Blusa de tirantes con caída plisada, color negro. Talla S. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-blu-pli-1.webp",
+        "fotos/art-blu-pli-2.webp",
+        "fotos/art-blu-pli-3.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.353Z"
+    },
+    {
+      "id": "3a83026bdd",
+      "sku": "ART-BOD-NEG",
+      "seccion": "articulos",
+      "title": "Body negro acanalado de tirantes",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Body corto de tirantes en tejido acanalado, color negro. Talla L. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-bod-neg-1.webp",
+        "fotos/art-bod-neg-2.webp",
+        "fotos/art-bod-neg-3.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.354Z"
+    },
+    {
+      "id": "96842bb92d",
+      "sku": "ART-CAM-NEG",
+      "seccion": "articulos",
+      "title": "Camisa negra satinada",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Camisa de manga larga con botones, tela satinada color negro. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-cam-neg-1.webp",
+        "fotos/art-cam-neg-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.355Z"
+    },
+    {
+      "id": "a2d98751c3",
+      "sku": "ART-DIS-ESC",
+      "seccion": "articulos",
+      "title": "Disfraz de escamas azul y dorado",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Disfraces",
+      "description": "Disfraz de escamas azules con detalles dorados. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-dis-esc-1.webp",
+        "fotos/art-dis-esc-2.webp",
+        "fotos/art-dis-esc-3.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.356Z"
+    },
+    {
+      "id": "8cd8c4f7bf",
+      "sku": "ART-BLU-VER",
+      "seccion": "articulos",
+      "title": "Blusa verde botella con botones",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Blusa de manga corta con escote en V, botones y lazo a la cintura. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-blu-ver-1.webp",
+        "fotos/art-blu-ver-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.357Z"
+    },
+    {
+      "id": "5ca7282f08",
+      "sku": "ART-AZU-REY",
+      "seccion": "articulos",
+      "title": "Prenda azul rey con moño",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Prenda color azul rey con moño a la cintura. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-azu-rey-1.webp",
+        "fotos/art-azu-rey-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.358Z"
+    },
+    {
+      "id": "27c298699b",
+      "sku": "ART-JEA-BLA",
+      "seccion": "articulos",
+      "title": "Jeans blancos rotos 1822 Denim",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Ropa",
+      "description": "Pantalón de mezclilla blanco con rotos y bastilla deshilachada. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-jea-bla-1.webp",
+        "fotos/art-jea-bla-2.webp",
+        "fotos/art-jea-bla-3.webp",
+        "fotos/art-jea-bla-4.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.359Z"
+    },
+    {
+      "id": "61b80bc445",
+      "sku": "ART-BOL-CAM",
+      "seccion": "articulos",
+      "title": "Bolsa crossbody camel con hebilla",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Bolsas",
+      "description": "Bolsa pequeña color camel con hebilla dorada y correa ajustable. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-bol-cam-1.webp",
+        "fotos/art-bol-cam-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.360Z"
+    },
+    {
+      "id": "fda18a90ac",
+      "sku": "ART-BOL-NEG",
+      "seccion": "articulos",
+      "title": "Bolsa crossbody negra acolchada",
+      "price": 0,
+      "unit": "pieza",
+      "category": "Bolsas",
+      "description": "Bolsa pequeña negra acolchada con argolla dorada, doble cierre y correa ajustable. Artículo de segunda mano.",
+      "stock": 1,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/art-bol-neg-1.webp",
+        "fotos/art-bol-neg-2.webp"
+      ],
+      "createdAt": "2026-11-22T23:21:17.361Z"
     }
   ]
 }
