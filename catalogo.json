@@ -54,7 +54,7 @@
       "unit": "rebanada",
       "category": "Pasteles",
       "description": "Capas de pan de chocolate, mousse de chocolate y crema de chocolate blanco, cubierta con ganache. Se mantiene en refrigeración.",
-      "stock": null,
+      "stock": 6,
       "status": "disponible",
       "featured": true,
       "images": [
@@ -71,8 +71,8 @@
       "unit": "pieza",
       "category": "Muffins",
       "description": "Muffin grande de chocolate, esponjoso y con mucho sabor a cacao. Ideal con café o leche.",
-      "stock": null,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": true,
       "images": [
         "fotos/muf-cho-1.webp",
@@ -93,7 +93,7 @@
       "unit": "pieza",
       "category": "Bocaditos",
       "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por 5.",
-      "stock": null,
+      "stock": 3,
       "status": "disponible",
       "featured": false,
       "images": [
