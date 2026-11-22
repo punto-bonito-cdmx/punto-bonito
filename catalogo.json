@@ -197,11 +197,11 @@
       "id": "fe2d263a5e",
       "sku": "ART-VES-TOM",
       "seccion": "articulos",
-      "title": "Vestido playero negro Tommy Hilfiger",
+      "title": "Vestido playero azul marino Tommy Hilfiger",
       "price": 300,
       "unit": "pieza",
       "category": "Ropa",
-      "description": "Vestido playero Tommy Hilfiger en color negro, cuello redondo y manga corta, con el logo Hilfiger New York City al frente. Corte recto y cómodo, fácil de combinar con tenis o sandalias. Artículo de segunda mano.",
+      "description": "Vestido playero Tommy Hilfiger en color azul marino, cuello redondo y manga corta, con el logo Hilfiger New York City al frente. Corte recto y cómodo, fácil de combinar con tenis o sandalias. Artículo de segunda mano.",
       "stock": 1,
       "status": "disponible",
       "featured": false,
@@ -223,7 +223,8 @@
       "status": "disponible",
       "featured": false,
       "images": [
-        "fotos/art-pla-tom-1.webp"
+        "fotos/art-pla-tom-1.webp",
+        "fotos/art-pla-tom-2.webp"
       ],
       "createdAt": "2026-11-22T23:21:17.345Z"
     },
