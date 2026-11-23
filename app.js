@@ -21,6 +21,11 @@
       marquee: ['Antojos que hacen revolución', 'Edición 20 de noviembre', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🚂', '✦'],
     },
   };
+  // Título de la portada según la sección; la última palabra va resaltada.
+  const TITULOS = {
+    postres: 'Postres ricos directo a tu puerta',
+    articulos: 'Ropa y bolsas de segunda mano a buen precio',
+  };
   // Siluetas dibujadas a mano (sin fotos ni personajes reales): pies en y=40, centro en x=0.
   function trenSVG() {
     const adelita = `<g id="pb-adelita"><ellipse cx="0" cy="11" rx="9" ry="2.2"/><path d="M-4 11Q0 3 4 11Z"/>
@@ -251,7 +256,8 @@
 
   function renderHero() {
     const s = state.settings;
-    const words = (s.tagline || s.storeName).split(' ');
+    // El título cambia con la sección elegida (desde 2026-11-22).
+    const words = (TITULOS[state.section] || s.tagline || s.storeName).split(' ');
     const last = words.pop();
     $('#hero-title').innerHTML = `${esc(words.join(' '))} <em>${esc(last)}</em>`;
     const horas = (s.horarios || []).join(' o ');
@@ -282,8 +288,10 @@
     const msgCta = $('#msg-cta');
     if (msgCta && msgUrl(s)) { msgCta.href = msgUrl(s); msgCta.hidden = false; }
 
-    const featured = state.items.filter((i) => i.featured && i.status === 'disponible');
-    const slides = (featured.length ? featured : avail).slice(0, 6);
+    // Destacados de la sección elegida: favoritos disponibles o, si no hay, lo disponible.
+    const availSec = avail.filter((i) => secOf(i) === state.section);
+    const featured = availSec.filter((i) => i.featured);
+    const slides = (featured.length ? featured : availSec).slice(0, 6);
     $('#hero-show').hidden = !slides.length;
     $('#carousel').innerHTML = slides.map((it, i) => `
       <a class="slide${i === 0 ? ' is-active' : ''}" href="#/item/${it.id}" data-open="${it.id}" aria-label="${esc(it.title)}, ${esc(priceLabel(it))}">
@@ -385,16 +393,21 @@
     renderSecTabs();
     renderChips();
     renderGrid();
+    renderHero();
+    renderMarquee();
   }
 
+  // La cinta solo pasa los productos de la sección elegida (postres o artículos).
   function renderMarquee() {
-    const names = state.items.map((i) => i.title);
+    const art = state.section === 'articulos';
+    const names = inSection().map((i) => i.title);
     const tema = TEMAS[state.settings.temporada];
-    const extra = tema ? tema.marquee : ['Entrega a domicilio', 'Transferencia o efectivo', 'Escríbenos por Messenger'];
+    const extra = art ? ['Ropa y bolsas de segunda mano', 'Piezas únicas', 'Entrega a domicilio', 'Transferencia o efectivo']
+      : tema ? tema.marquee : ['Entrega a domicilio', 'Transferencia o efectivo', 'Escríbenos por Messenger'];
     const marks = tema ? tema.marks : ['✦'];
     const run = [...names, ...extra].map((w, i) => `${esc(w)} <i>${marks[i % marks.length]}</i>`).join(' ');
     $('.marquee-track').innerHTML = `<span>${run}</span><span>${run}</span>`;
-    $('#marquee').hidden = !state.items.length;
+    $('#marquee').hidden = !names.length;
   }
 
   function renderChips() {
