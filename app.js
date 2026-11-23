@@ -12,6 +12,10 @@
       emoji: '🎃', eyebrow: '🎃 Edición Halloween',
       marquee: ['Antojos de miedo', 'Entrega de noche', 'Transferencia o efectivo'], marks: ['🎃', '👻', '🦇'],
     },
+    otono: {
+      emoji: '🍂', eyebrow: '🍂 Antojos de otoño',
+      marquee: ['Postres para compartir en la sobremesa', 'Antojos de temporada', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🍂', '🍁'],
+    },
     revolucion: {
       emoji: '🚂', eyebrow: '🚂 Edición Revolución',
       marquee: ['Antojos que hacen revolución', 'Edición 20 de noviembre', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🚂', '✦'],
@@ -215,6 +219,7 @@
     for (const k of Object.keys(TEMAS)) document.body.classList.toggle(`tema-${k}`, s.temporada === k);
     $('.spooky').hidden = s.temporada !== 'halloween';
     $('.papel-picado').hidden = s.temporada !== 'revolucion';
+    $('.hojas').hidden = s.temporada !== 'otono';
     if (s.temporada === 'revolucion' && !$('.papel-picado').children.length) {
       // Tren revolucionario con adelitas y revolucionarios en los techos, cruzando un paisaje
       // de cerros y magueyes (el contenedor conserva su nombre viejo, .papel-picado).
