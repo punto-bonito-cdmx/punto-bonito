@@ -30,11 +30,6 @@
     "pedidoMinimo": 0,
     "puntoEntrega": "",
     "temporada": "",
-    "temporadaProgramada": {
-      "tema": "otono",
-      "desde": "2026-11-26",
-      "hasta": "2026-11-27"
-    },
     "entregaAnticipada": true,
     "extraAnticipada": 50,
     "fueraZona": false,
@@ -42,7 +37,46 @@
     "transferencia": true,
     "beneficiario": "",
     "clabe": "",
-    "banco": ""
+    "banco": "",
+    "temporadasProgramadas": [
+      {
+        "tema": "otono",
+        "desde": "2026-11-26",
+        "hasta": "2026-11-27"
+      },
+      {
+        "tema": "navidad",
+        "desde": "2026-12-24",
+        "hasta": "2026-12-24",
+        "aviso": "🌟 ¡Feliz Nochebuena!"
+      },
+      {
+        "tema": "navidad",
+        "desde": "2026-12-25",
+        "hasta": "2026-12-25",
+        "aviso": "🎄 ¡Feliz Navidad!"
+      },
+      {
+        "tema": "navidad",
+        "desde": "2026-12-01",
+        "hasta": "2026-12-23"
+      },
+      {
+        "tema": "invierno",
+        "desde": "2026-12-26",
+        "hasta": "2026-12-30"
+      },
+      {
+        "tema": "anioviejo",
+        "desde": "2026-12-31",
+        "hasta": "2026-12-31"
+      },
+      {
+        "tema": "anionuevo",
+        "desde": "2027-01-01",
+        "hasta": "2027-01-03"
+      }
+    ]
   },
   "items": [
     {

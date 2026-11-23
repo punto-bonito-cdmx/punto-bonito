@@ -96,3 +96,6 @@ body.tema-otono {
   .hojas i:nth-child(even) { top: 62%; }
   .tema-otono .card-tilt::after { transition: none; }
 }
+
+/* "Favorito" baja un poco para no taparse con el adorno de la esquina. */
+.tema-otono .card .sticker { top: 42px; }

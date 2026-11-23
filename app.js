@@ -15,6 +15,28 @@
     otono: {
       emoji: '🍂', eyebrow: '🍂 Antojos de otoño',
       marquee: ['Postres para compartir en la sobremesa', 'Antojos de temporada', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🍂', '🍁'],
+      caen: ['🍂', '🍁'],
+    },
+    // Diciembre y año nuevo (diciembre.css). El 24 y el 25 cambian el aviso de arriba desde catalogo.json.
+    navidad: {
+      emoji: '🎄', eyebrow: '🎄 Edición navideña',
+      marquee: ['Postres para la cena de Navidad', 'Regala algo rico', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🎄', '⭐'],
+      caen: ['❄️', '⭐', '❄️', '✨'],
+    },
+    invierno: {
+      emoji: '❄️', eyebrow: '❄️ Antojos de invierno',
+      marquee: ['Postres para el frío', 'Antojos de fin de año', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['❄️', '☕'],
+      caen: ['❄️', '❄️', '✨'],
+    },
+    anioviejo: {
+      emoji: '🕛', eyebrow: '🕛 ¡Adiós, año viejo!',
+      marquee: ['Gracias por este año', 'Postres para despedir el año', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['✨', '🕛'],
+      caen: ['✨', '🎊', '✨'],
+    },
+    anionuevo: {
+      emoji: '🎉', eyebrow: '🎉 ¡Feliz Año Nuevo!',
+      marquee: ['Empieza el año con algo rico', 'Feliz 2027', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🎉', '✨'],
+      caen: ['🎉', '✨', '🎊'],
     },
     revolucion: {
       emoji: '🚂', eyebrow: '🚂 Edición Revolución',
@@ -163,14 +185,20 @@
 
   // Lo que en la versión con servidor calcula server.js: fechas de entrega, tema activo, etc.
   function prepararEstatico(s) {
-    const hoy = new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date());
+    // ?fecha=2026-12-24 permite ver la página como se verá ese día (solo para revisar temas).
+    const fechaPrueba = new URLSearchParams(location.search).get('fecha');
+    const hoy = /^\d{4}-\d{2}-\d{2}$/.test(fechaPrueba || '') ? fechaPrueba
+      : new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date());
     const mas = (n) => new Date(Date.parse(`${hoy}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
     const desde = s.anticipacionDias ?? 1;
     const todas = Array.from({ length: 22 - desde }, (_, i) => mas(desde + i));
     s.fechas = todas.filter((d) => (s.diasEntrega || []).includes(new Date(`${d}T12:00:00Z`).getUTCDay()));
     s.fechasAnticipada = s.entregaAnticipada ? todas : [];
-    const p = s.temporadaProgramada;
-    if (p && p.tema && p.desde <= hoy && (!p.hasta || hoy <= p.hasta)) s.temporada = p.tema;
+    // Temas por fechas: la lista temporadasProgramadas (gana el primero que coincida) y, por
+    // compatibilidad, la temporadaProgramada sola de antes. "aviso" cambia el texto de arriba ese día.
+    const lista = [].concat(s.temporadasProgramadas || [], s.temporadaProgramada || []);
+    const p = lista.find((x) => x && x.tema && x.desde <= hoy && (!x.hasta || hoy <= x.hasta));
+    if (p) { s.temporada = p.tema; s.temporadaAviso = p.aviso || ''; }
     // Transferencia puede ofrecerse sin CLABE publicada: los datos se mandan al confirmar.
     s.transferencia = s.transferencia ?? Boolean(s.clabe);
     return s;
@@ -218,13 +246,16 @@
     const s = state.settings;
     // ?tema=revolucion (o halloween, o ninguno) permite ver un tema antes de su fecha.
     const preview = new URLSearchParams(location.search).get('tema');
-    if (preview === 'ninguno') s.temporada = '';
-    else if (TEMAS[preview]) s.temporada = preview;
+    if (preview === 'ninguno') { s.temporada = ''; s.temporadaAviso = ''; }
+    else if (TEMAS[preview] && preview !== s.temporada) { s.temporada = preview; s.temporadaAviso = ''; }
     const tema = TEMAS[s.temporada];
     for (const k of Object.keys(TEMAS)) document.body.classList.toggle(`tema-${k}`, s.temporada === k);
     $('.spooky').hidden = s.temporada !== 'halloween';
     $('.papel-picado').hidden = s.temporada !== 'revolucion';
-    $('.hojas').hidden = s.temporada !== 'otono';
+    // Lo que cae detrás del contenido (hojas, nieve, confeti) según el tema.
+    const caen = tema && tema.caen;
+    $('.hojas').hidden = !caen;
+    $('.hojas').innerHTML = caen ? Array.from({ length: 6 }, (_, i) => `<i>${caen[i % caen.length]}</i>`).join('') : '';
     if (s.temporada === 'revolucion' && !$('.papel-picado').children.length) {
       // Tren revolucionario con adelitas y revolucionarios en los techos, cruzando un paisaje
       // de cerros y magueyes (el contenedor conserva su nombre viejo, .papel-picado).
@@ -262,7 +293,7 @@
     $('#hero-title').innerHTML = `${esc(words.join(' '))} <em>${esc(last)}</em>`;
     const horas = (s.horarios || []).join(' o ');
     $('#eyebrow-text').textContent = !s.abierto ? 'Pedidos en pausa'
-      : TEMAS[s.temporada] ? `${TEMAS[s.temporada].eyebrow} · ${diasText()}${horas ? `, ${horas}` : ''}`
+      : TEMAS[s.temporada] ? `${s.temporadaAviso || TEMAS[s.temporada].eyebrow} · ${diasText()}${horas ? `, ${horas}` : ''}`
         : `Entregas ${diasText() || 'en tu colonia'}${horas ? `, ${horas}` : ''}`;
 
     const avail = state.items.filter((i) => i.status === 'disponible');
