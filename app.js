@@ -15,28 +15,28 @@
     otono: {
       emoji: '🍂', eyebrow: '🍂 Antojos de otoño',
       marquee: ['Postres para compartir en la sobremesa', 'Antojos de temporada', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🍂', '🍁'],
-      caen: ['🍂', '🍁'],
+      oscuro: true, caen: ['🍂', '🍁'],
     },
     // Diciembre y año nuevo (diciembre.css). El 24 y el 25 cambian el aviso de arriba desde catalogo.json.
     navidad: {
       emoji: '🎄', eyebrow: '🎄 Edición navideña',
       marquee: ['Postres para la cena de Navidad', 'Regala algo rico', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🎄', '⭐'],
-      caen: ['❄️', '⭐', '❄️', '✨'],
+      oscuro: true, caen: ['❄️', '⭐', '❄️', '✨'],
     },
     invierno: {
       emoji: '❄️', eyebrow: '❄️ Antojos de invierno',
       marquee: ['Postres para el frío', 'Antojos de fin de año', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['❄️', '☕'],
-      caen: ['❄️', '❄️', '✨'],
+      oscuro: true, caen: ['❄️', '❄️', '✨'],
     },
     anioviejo: {
       emoji: '🕛', eyebrow: '🕛 ¡Adiós, año viejo!',
       marquee: ['Gracias por este año', 'Postres para despedir el año', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['✨', '🕛'],
-      caen: ['✨', '🎊', '✨'],
+      oscuro: true, caen: ['✨', '🎊', '✨'],
     },
     anionuevo: {
       emoji: '🎉', eyebrow: '🎉 ¡Feliz Año Nuevo!',
       marquee: ['Empieza el año con algo rico', 'Feliz 2027', 'Entrega a domicilio', 'Transferencia o efectivo'], marks: ['🎉', '✨'],
-      caen: ['🎉', '✨', '🎊'],
+      oscuro: true, caen: ['🎉', '✨', '🎊'],
     },
     revolucion: {
       emoji: '🚂', eyebrow: '🚂 Edición Revolución',
@@ -48,6 +48,35 @@
     postres: 'Postres ricos directo a tu puerta',
     articulos: 'Ropa y bolsas de segunda mano a buen precio',
   };
+  // Santa en su trineo con tres renos (el de adelante con nariz roja), volando hacia la izquierda
+  // y dejando una estela de destellos. Dibujo propio en SVG.
+  function trineoSVG() {
+    const reno = (x, y, nariz) => `<g class="reno" transform="translate(${x} ${y})">
+      <path class="pata" d="M-9 3-17 9M-6 4-12 12M9 3l9 4M12 1l9 1"/>
+      <ellipse cx="0" cy="0" rx="14" ry="6.2"/><path d="M-8-3-15-14l4-2 5 11z"/>
+      <ellipse cx="-18" cy="-15.5" rx="5.6" ry="3" transform="rotate(-12 -18 -15.5)"/>
+      <path class="cuerno" d="M-14-18l-3-8m1.4 3.6-3.4-1.4M-12-18l1-8m-.4 3.4 3-1.6"/>
+      <path d="M13-2l5-3-1 4z"/>${nariz ? '<circle class="nariz" cx="-23.4" cy="-16.6" r="1.9"/>' : ''}</g>`;
+    return `<svg class="vuelo" viewBox="0 -44 260 92" aria-hidden="true">
+      <g class="estela"><circle cx="232" cy="14" r="2"/><circle cx="246" cy="6" r="1.6"/><circle cx="252" cy="20" r="1.3"/><circle cx="240" cy="-2" r="1.2"/></g>
+      <g class="flota">
+        <path class="rienda" d="M-6-14Q30-4 52-10Q80-2 98-12Q130 0 154 6"/>
+        ${reno(14, 8, true)}${reno(60, 4, false)}${reno(106, 8, false)}
+        <g class="trineo-cuerpo">
+          <path class="patin" d="M146 34h66q9 0 9-9M146 34q-9 0-9-8 0-5 5-5"/>
+          <path class="caja" d="M152 30h56q6-10 2-26h-12l-5 10h-30q-9 0-11 8z"/>
+          <path class="filo" d="M152 30h56M163 14h30"/>
+          <path class="saco" d="M196 4q-4-20 8-22 10 2 8 14 2 8-4 10z"/>
+          <ellipse class="rojo" cx="183" cy="4" rx="8.5" ry="10"/>
+          <path class="rojo" d="M176 2 163 6l1 4 13-3z"/>
+          <circle class="piel" cx="180" cy="-9" r="4.6"/>
+          <path class="blanco" d="M175.5-8q0 8 5 9 4-1 4.5-6z"/>
+          <path class="rojo" d="M175-11l12 0-14-11z"/><circle class="blanco" cx="173" cy="-22" r="2.2"/>
+          <rect class="blanco" x="174.5" y="-12.5" width="13" height="3" rx="1.5"/>
+          <rect class="cinto" x="175" y="5" width="16" height="2.6"/>
+        </g>
+      </g></svg>`;
+  }
   // Siluetas dibujadas a mano (sin fotos ni personajes reales): pies en y=40, centro en x=0.
   function trenSVG() {
     const adelita = `<g id="pb-adelita"><ellipse cx="0" cy="11" rx="9" ry="2.2"/><path d="M-4 11Q0 3 4 11Z"/>
@@ -260,6 +289,18 @@
       // Tren revolucionario con adelitas y revolucionarios en los techos, cruzando un paisaje
       // de cerros y magueyes (el contenedor conserva su nombre viejo, .papel-picado).
       $('.papel-picado').innerHTML = trenSVG();
+    }
+    // Navidad: Santa cruza volando en su trineo bajo el encabezado, como el tren de la Revolución.
+    $('.trineo').hidden = s.temporada !== 'navidad';
+    if (s.temporada === 'navidad' && !$('.trineo').children.length) $('.trineo').innerHTML = trineoSVG();
+    // Temas de noche (otoño a año nuevo): todos ven la versión oscura, en celular y en computadora,
+    // salvo que la persona haya escogido claro u oscuro con el botón.
+    let elegido = null;
+    try { elegido = localStorage.getItem('postres-theme'); } catch { /* sin almacenamiento */ }
+    if (!elegido) {
+      if (tema && tema.oscuro) document.documentElement.dataset.theme = 'dark';
+      else delete document.documentElement.dataset.theme;
+      paintThemeIcon();
     }
     document.title = `${s.storeName} · postres y artículos a domicilio${tema ? ` ${tema.emoji}` : ''}`;
     $$('[data-store-name]').forEach((el) => { el.textContent = s.storeName; });

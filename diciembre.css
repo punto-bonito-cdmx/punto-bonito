@@ -159,3 +159,44 @@ body.tema-anionuevo {
 
 /* "Favorito" baja un poco para no taparse con el adorno de la esquina. */
 :is(.tema-navidad, .tema-invierno, .tema-anioviejo, .tema-anionuevo) .card .sticker { top: 42px; }
+
+/* ---------- Navidad: Santa cruza volando bajo el encabezado (como el tren de la Revolución) ---------- */
+.trineo {
+  position: absolute; z-index: 30; top: var(--top-h); left: 0; right: 0; height: 104px;
+  overflow: hidden; pointer-events: none;
+}
+.trineo .vuelo {
+  position: absolute; left: 0; top: 4px; width: 300px; height: 106px; overflow: visible;
+  animation: santa-viaje 26s linear infinite;
+}
+.trineo .flota { animation: santa-flota 2.6s ease-in-out infinite alternate; }
+.trineo .reno { fill: #9a6440; }
+.trineo .reno .pata { fill: none; stroke: #9a6440; stroke-width: 2.4; stroke-linecap: round; }
+.trineo .reno .cuerno { fill: none; stroke: #e8d2a8; stroke-width: 1.5; stroke-linecap: round; }
+.trineo .reno .nariz { fill: #ff3b3b; filter: drop-shadow(0 0 3px #ff5a5a); }
+.trineo .rienda { fill: none; stroke: #e2b955; stroke-width: 1.1; opacity: .85; }
+.trineo .caja { fill: #c0262f; }
+.trineo .filo { fill: none; stroke: #e2b955; stroke-width: 2; }
+.trineo .patin { fill: none; stroke: #e2b955; stroke-width: 2.6; stroke-linecap: round; }
+.trineo .saco { fill: #8a5a3c; }
+.trineo .rojo { fill: #e0393f; }
+.trineo .piel { fill: #f3c9a5; }
+.trineo .blanco { fill: #fff; }
+.trineo .cinto { fill: #2a1614; }
+.trineo .estela circle { fill: #ffe9a8; animation: estela 1.2s ease-in-out infinite alternate; }
+.trineo .estela circle:nth-child(2) { animation-delay: .3s; }
+.trineo .estela circle:nth-child(3) { animation-delay: .6s; }
+.trineo .estela circle:nth-child(4) { animation-delay: .9s; }
+@keyframes santa-viaje { from { transform: translateX(calc(100vw + 20px)); } to { transform: translateX(-320px); } }
+@keyframes santa-flota { from { transform: translateY(-3px) rotate(-1.5deg); } to { transform: translateY(5px) rotate(1deg); } }
+@keyframes estela { from { opacity: .2; } to { opacity: 1; } }
+.tema-navidad .hero { padding-top: 116px; }
+@media (max-width: 639px) {
+  .trineo { height: 86px; }
+  .trineo .vuelo { width: 240px; height: 85px; }
+  .tema-navidad .hero { padding-top: 96px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trineo .vuelo { animation: none; left: auto; right: 16px; }
+  .trineo .flota, .trineo .estela circle { animation: none; }
+}
