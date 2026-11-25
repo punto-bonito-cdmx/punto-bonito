@@ -88,8 +88,8 @@
       "unit": "rebanada",
       "category": "Pasteles",
       "description": "Capas de pan de chocolate, mousse de chocolate y crema de chocolate blanco, cubierta con ganache. Se mantiene en refrigeración.",
-      "stock": 6,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": true,
       "images": [
         "fotos/pas-tux-1.webp"
@@ -127,8 +127,8 @@
       "unit": "pieza",
       "category": "Bocaditos",
       "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por 5.",
-      "stock": 3,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": false,
       "images": [
         "fotos/choc-mini-1.webp",
@@ -149,8 +149,8 @@
       "unit": "pieza",
       "category": "Bocaditos",
       "description": "Mini donas espolvoreadas con azúcar. Perfectas para compartir o para el lunch. Llévate 5 por $10.",
-      "stock": null,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": false,
       "images": [
         "fotos/don-mini-1.webp",
@@ -168,8 +168,8 @@
       "unit": "bolsita",
       "category": "Bocaditos",
       "description": "Bolsita de pretzels crujientes, perfectos para botanear o acompañar tu café.",
-      "stock": null,
-      "status": "disponible",
+      "stock": 0,
+      "status": "agotado",
       "featured": false,
       "images": [],
       "createdAt": "2026-11-21T00:05:48.811Z"
