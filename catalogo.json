@@ -195,36 +195,14 @@
       "unit": "pieza",
       "category": "Muffins",
       "description": "Muffin grande de chocolate, esponjoso y con mucho sabor a cacao. Ideal con café o leche.",
-      "stock": 0,
-      "status": "agotado",
+      "stock": null,
+      "status": "disponible",
       "featured": true,
       "images": [
         "fotos/muf-cho-1.webp",
         "fotos/muf-cho-2.webp"
       ],
       "createdAt": "2026-11-08T20:03:32.721Z"
-    },
-    {
-      "id": "3b843abef8",
-      "sku": "CHOC-MINI",
-      "seccion": "postres",
-      "title": "Mini chocolatines",
-      "price": 8,
-      "promo": {
-        "cantidad": 2,
-        "precio": 15
-      },
-      "unit": "pieza",
-      "category": "Bocaditos",
-      "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por $15.",
-      "stock": 0,
-      "status": "agotado",
-      "featured": false,
-      "images": [
-        "fotos/choc-mini-1.webp",
-        "fotos/choc-mini-2.webp"
-      ],
-      "createdAt": "2026-11-08T20:08:32.721Z"
     },
     {
       "id": "37db199aef",
