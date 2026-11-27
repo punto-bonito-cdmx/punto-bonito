@@ -131,7 +131,7 @@
       },
       "unit": "pieza",
       "category": "Bocaditos",
-      "description": "Macarrón en varios sabores: pregunta por los disponibles. Llévate 2 por 5."
+      "description": "Macarrón en varios sabores: pregunta por los disponibles. Llévate 2 por $35."
     },
     {
       "id": "aa945edcb7",
@@ -216,7 +216,7 @@
       },
       "unit": "pieza",
       "category": "Bocaditos",
-      "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por 5.",
+      "description": "Mini chocolatines de hojaldre rellenos de chocolate. Llévate 2 por $35.",
       "stock": 0,
       "status": "agotado",
       "featured": false,
