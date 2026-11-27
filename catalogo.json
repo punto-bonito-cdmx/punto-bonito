@@ -88,13 +88,103 @@
       "unit": "rebanada",
       "category": "Pasteles",
       "description": "Capas de pan de chocolate, mousse de chocolate y crema de chocolate blanco, cubierta con ganache. Se mantiene en refrigeración.",
-      "stock": 0,
-      "status": "agotado",
+      "stock": null,
+      "status": "disponible",
       "featured": true,
       "images": [
         "fotos/pas-tux-1.webp"
       ],
       "createdAt": "2026-11-14T06:07:24.567Z"
+    },
+    {
+      "id": "c53960ce07",
+      "seccion": "postres",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/che-zar-1.webp",
+        "fotos/che-zar-2.webp"
+      ],
+      "createdAt": "2026-11-27T21:17:41.333Z",
+      "sku": "CHE-FRA",
+      "title": "Rebanada de cheesecake de frambuesa",
+      "price": 55,
+      "unit": "rebanada",
+      "category": "Pasteles",
+      "description": "Rebanada de cheesecake cremoso cubierto con mermelada de frambuesa y orilla de crema batida. Se mantiene en refrigeración."
+    },
+    {
+      "id": "931d34c7eb",
+      "seccion": "postres",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [],
+      "createdAt": "2026-11-27T21:17:41.334Z",
+      "sku": "MAC",
+      "title": "Macarrón",
+      "price": 20,
+      "promo": {
+        "cantidad": 2,
+        "precio": 35
+      },
+      "unit": "pieza",
+      "category": "Bocaditos",
+      "description": "Macarrón en varios sabores: pregunta por los disponibles. Llévate 2 por 5."
+    },
+    {
+      "id": "aa945edcb7",
+      "seccion": "postres",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [],
+      "createdAt": "2026-11-27T21:17:41.335Z",
+      "sku": "TRU-BOL",
+      "title": "Trufas de chocolate en bolsita",
+      "price": 20,
+      "unit": "bolsita",
+      "category": "Bocaditos",
+      "description": "Bolsita de trufas de chocolate, perfectas para un antojo dulce o para regalar."
+    },
+    {
+      "id": "2ee6d0f51d",
+      "sku": "DON-MINI",
+      "seccion": "postres",
+      "title": "Mini donas con azúcar",
+      "price": 3,
+      "promo": {
+        "cantidad": 5,
+        "precio": 10
+      },
+      "unit": "pieza",
+      "category": "Bocaditos",
+      "description": "Mini donas espolvoreadas con azúcar. Perfectas para compartir o para el lunch. Llévate 5 por $10.",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [
+        "fotos/don-mini-1.webp",
+        "fotos/don-mini-2.webp",
+        "fotos/don-mini-3.webp"
+      ],
+      "createdAt": "2026-11-08T20:07:32.721Z"
+    },
+    {
+      "id": "e9a013f681",
+      "sku": "PRE-BOL",
+      "seccion": "postres",
+      "title": "Pretzels en bolsita",
+      "price": 20,
+      "unit": "bolsita",
+      "category": "Bocaditos",
+      "description": "Bolsita de pretzels crujientes, perfectos para botanear o acompañar tu café.",
+      "stock": null,
+      "status": "disponible",
+      "featured": false,
+      "images": [],
+      "createdAt": "2026-11-21T00:05:48.811Z"
     },
     {
       "id": "880b537af1",
@@ -135,44 +225,6 @@
         "fotos/choc-mini-2.webp"
       ],
       "createdAt": "2026-11-08T20:08:32.721Z"
-    },
-    {
-      "id": "2ee6d0f51d",
-      "sku": "DON-MINI",
-      "seccion": "postres",
-      "title": "Mini donas con azúcar",
-      "price": 3,
-      "promo": {
-        "cantidad": 5,
-        "precio": 10
-      },
-      "unit": "pieza",
-      "category": "Bocaditos",
-      "description": "Mini donas espolvoreadas con azúcar. Perfectas para compartir o para el lunch. Llévate 5 por $10.",
-      "stock": 0,
-      "status": "agotado",
-      "featured": false,
-      "images": [
-        "fotos/don-mini-1.webp",
-        "fotos/don-mini-2.webp",
-        "fotos/don-mini-3.webp"
-      ],
-      "createdAt": "2026-11-08T20:07:32.721Z"
-    },
-    {
-      "id": "e9a013f681",
-      "sku": "PRE-BOL",
-      "seccion": "postres",
-      "title": "Pretzels en bolsita",
-      "price": 20,
-      "unit": "bolsita",
-      "category": "Bocaditos",
-      "description": "Bolsita de pretzels crujientes, perfectos para botanear o acompañar tu café.",
-      "stock": 0,
-      "status": "agotado",
-      "featured": false,
-      "images": [],
-      "createdAt": "2026-11-21T00:05:48.811Z"
     },
     {
       "id": "37db199aef",
